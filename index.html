@@ -169,7 +169,7 @@
 <div class="form-row"><div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div><div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div></div>
 <div class="switch-line"><label class="switch"><input data-toggle="dept-fields" name="hasDept" type="checkbox"/><span class="slider"></span></label><span class="switch-text">Agregar piso y departamento</span></div>
 <div class="form-row equal conditional" data-conditional="dept-fields">
-<div class="field-wrap select-field"><span class="floating-label">Piso</span><select class="select" data-validate="floor-clean" name="piso"><option value="">Seleccionar</option><option>PB</option><option>Planta baja</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap select-field"><span class="floating-label">Piso</span><select class="select" data-validate="floor-clean" name="piso"><option value="">Seleccionar</option><option value="PB">PB (Planta baja)</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option></select><div class="field-error"></div><div class="field-warning"></div></div>
 <div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento"/><div class="field-error"></div><div class="field-warning"></div></div>
 </div>
 <div class="field-wrap"><span class="floating-label">Código postal</span><input class="input" data-validate="postal" name="cp" placeholder="Código postal"/><div class="field-error"></div></div>
@@ -521,6 +521,19 @@
       const form = btn.closest('.proposal').querySelector('.ux-form');
       fillForm(form, btn.dataset.fill);
     });
+  });
+
+  // Piso (select): mostrar "PB (Planta baja)" en la lista, pero "PB" una vez elegido
+  document.querySelectorAll('select[name="piso"]').forEach(sel => {
+    const opt = sel.querySelector('option[value="PB"]');
+    if(!opt) return;
+    const long = 'PB (Planta baja)', short = 'PB';
+    const expand = () => { opt.textContent = long; };
+    const collapse = () => { opt.textContent = (sel.value === 'PB') ? short : long; };
+    sel.addEventListener('mousedown', expand);
+    sel.addEventListener('focus', expand);
+    sel.addEventListener('change', collapse);
+    sel.addEventListener('blur', collapse);
   });
 
   const navLinks = Array.from(document.querySelectorAll('.nav a'));
