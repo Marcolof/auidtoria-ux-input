@@ -154,7 +154,7 @@
 <div class="proposal-head">
 <div>
 <h3 class="proposal-title">Propuesta 2 · Agrupación semántica con switch</h3>
-<p class="proposal-desc">Calle + Altura en una fila. Piso + Departamento aparecen solo si el usuario activa la opción.</p>
+<p class="proposal-desc">Calle + Altura en una fila. Con el switch aparecen Piso (selector de lista cerrada) y Departamento, solo si el usuario los necesita.</p>
 </div>
 <div class="proposal-badges"><span class="chip ok">Recomendada UX</span><span class="chip warn">Requiere lógica condicional</span></div>
 </div>
@@ -180,7 +180,7 @@
 </div>
 <aside class="audit-side">
 <div class="validation-panel"><h4>Prueba rápida</h4><ul class="validation-list live-list"><li>Activá o desactivá el switch y validá el comportamiento.</li></ul><div class="inline-tools"><button class="ghost" data-fill="valid-basic" type="button">Casa / sin depto</button><button class="ghost" data-fill="valid-dept" type="button">Con depto</button><button class="ghost" data-fill="empty" type="button">Vaciar</button></div><div class="results"></div></div>
-<div class="card"><h4>Lectura UX</h4><p>Aplica progressive disclosure: no muestra campos que no son necesarios para usuarios que no tienen piso/departamento.</p><div class="success"><strong>Fortaleza:</strong> agrupa datos relacionados sin mezclar responsabilidades.</div></div>
+<div class="card"><h4>Lectura UX</h4><p>Aplica progressive disclosure: no muestra campos que no son necesarios para usuarios que no tienen piso/departamento. Además, Piso es un selector de lista cerrada, por lo que no admite valores ambiguos como “1B”.</p><div class="success"><strong>Fortaleza:</strong> agrupa datos relacionados sin mezclar responsabilidades y normaliza el dato de Piso.</div></div>
 <div class="score-grid"><div class="score"><span>Claridad</span><div class="bar ok"><span style="width:90%"></span></div><strong>Alta</strong></div><div class="score"><span>Consistencia visual</span><div class="bar warn"><span style="width:62%"></span></div><strong>Media</strong></div><div class="score"><span>Calidad del dato</span><div class="bar ok"><span style="width:92%"></span></div><strong>Alta</strong></div><div class="score"><span>MVP</span><div class="bar warn"><span style="width:68%"></span></div><strong>Media</strong></div></div>
 </aside>
 </div>
@@ -190,7 +190,7 @@
 <div class="proposal-head">
 <div>
 <h3 class="proposal-title">Propuesta 3 · Cliente corregida</h3>
-<p class="proposal-desc">Mantiene todos los inputs full-width, pero corrige el supporting text para no mezclar Piso con Departamento.</p>
+<p class="proposal-desc">Mantiene todos los inputs full-width, pero Piso pasa a ser un selector de lista cerrada (PB y 1 a 20): elimina la ambigüedad sin necesidad de texto de ayuda.</p>
 </div>
 <div class="proposal-badges"><span class="chip ok">Compromiso recomendado</span><span class="chip info">MVP simple</span></div>
 </div>
@@ -213,9 +213,9 @@
 </form>
 </div>
 <aside class="audit-side">
-<div class="validation-panel"><h4>Prueba rápida</h4><ul class="validation-list live-list"><li>Prueba la misma estructura full-width con microcopy corregida.</li></ul><div class="inline-tools"><button class="ghost" data-fill="valid-basic" type="button">Sin depto</button><button class="ghost" data-fill="valid-dept" type="button">Con depto</button><button class="ghost" data-fill="empty" type="button">Vaciar</button></div><div class="results"></div></div>
-<div class="card"><h4>Lectura UX</h4><p>Es la alternativa de compromiso: mantiene consistencia visual con la web y reduce ambigüedad en la captura.</p><div class="success"><strong>Ventaja:</strong> no requiere switch ni lógica condicional.</div></div>
-<div class="score-grid"><div class="score"><span>Claridad</span><div class="bar ok"><span style="width:82%"></span></div><strong>Alta</strong></div><div class="score"><span>Consistencia visual</span><div class="bar ok"><span style="width:92%"></span></div><strong>Alta</strong></div><div class="score"><span>Calidad del dato</span><div class="bar ok"><span style="width:82%"></span></div><strong>Alta</strong></div><div class="score"><span>MVP</span><div class="bar ok"><span style="width:92%"></span></div><strong>Alta</strong></div></div>
+<div class="validation-panel"><h4>Prueba rápida</h4><ul class="validation-list live-list"><li>Prueba la estructura full-width con Piso como selector de lista cerrada.</li></ul><div class="inline-tools"><button class="ghost" data-fill="valid-basic" type="button">Sin depto</button><button class="ghost" data-fill="valid-dept" type="button">Con depto</button><button class="ghost" data-fill="empty" type="button">Vaciar</button></div><div class="results"></div></div>
+<div class="card"><h4>Lectura UX</h4><p>Es la alternativa de compromiso: mantiene la consistencia visual full-width de la web y elimina la ambigüedad de Piso usando una lista cerrada de opciones.</p><div class="success"><strong>Ventaja:</strong> no requiere switch ni lógica condicional, y el dato de Piso queda normalizado.</div></div>
+<div class="score-grid"><div class="score"><span>Claridad</span><div class="bar ok"><span style="width:82%"></span></div><strong>Alta</strong></div><div class="score"><span>Consistencia visual</span><div class="bar ok"><span style="width:92%"></span></div><strong>Alta</strong></div><div class="score"><span>Calidad del dato</span><div class="bar ok"><span style="width:90%"></span></div><strong>Alta</strong></div><div class="score"><span>MVP</span><div class="bar ok"><span style="width:92%"></span></div><strong>Alta</strong></div></div>
 </aside>
 </div>
 </article>
@@ -299,7 +299,7 @@
 <tbody>
 <tr><td><strong>1. Cliente original</strong></td><td>Alta consistencia visual con el resto de la web.</td><td>El ejemplo “1B” en Piso puede mezclar piso y departamento.</td><td><span class="chip bad">No recomendar sin ajustes</span></td></tr>
 <tr><td><strong>2. Agrupación con switch</strong></td><td>Reduce carga visual y respeta separación semántica.</td><td>Introduce lógica condicional y rompe un poco el patrón full-width.</td><td><span class="chip ok">Recomendada UX</span></td></tr>
-<tr><td><strong>3. Cliente corregida</strong></td><td>Conserva full-width y corrige ambigüedad.</td><td>Muestra campos opcionales aunque no apliquen.</td><td><span class="chip ok">Mejor compromiso</span></td></tr>
+<tr><td><strong>3. Cliente corregida</strong></td><td>Conserva full-width y elimina la ambigüedad con un selector de Piso de lista cerrada.</td><td>Piso queda acotado a una lista (sin texto libre); muestra los campos aunque no apliquen.</td><td><span class="chip ok">Mejor compromiso</span></td></tr>
 <tr><td><strong>4. MVP mínimo</strong></td><td>Muy simple de implementar.</td><td>Menos guía para formatos válidos.</td><td><span class="chip info">Aceptable para MVP</span></td></tr>
 <tr><td><strong>5. Complementarios agrupados</strong></td><td>Diferencia dirección principal y datos internos.</td><td>Agrega una jerarquía visual nueva.</td><td><span class="chip warn">Buena si aceptan sección</span></td></tr>
 </tbody>
@@ -327,18 +327,18 @@
 <tr><td><strong>Localidad</strong></td><td>Obligatorio</td><td>Debe seleccionarse una opción.</td><td>Seleccioná una localidad.</td></tr>
 <tr><td><strong>Calle</strong></td><td>Obligatorio</td><td>Texto con letras, números y caracteres habituales. No debería aceptar solo números.</td><td>Ingresá el nombre de la calle.</td></tr>
 <tr><td><strong>Altura</strong></td><td>Obligatorio</td><td>Numérico. “S/N” solo si negocio decide aceptarlo.</td><td>Ingresá una altura válida.</td></tr>
-<tr><td><strong>Piso</strong></td><td>Opcional o condicional</td><td>Valores cortos: PB, Planta baja, 1, 2, 10.</td><td>Ingresá un piso válido.</td></tr>
+<tr><td><strong>Piso</strong></td><td>Opcional o condicional</td><td>Recomendado: selector de lista cerrada (PB y 1 a 20). Si es texto libre, validar valores cortos.</td><td>Seleccioná un piso válido.</td></tr>
 <tr><td><strong>Departamento</strong></td><td>Opcional o condicional</td><td>Letras, números o ambos: A, B, 3, 1B.</td><td>Ingresá un departamento válido.</td></tr>
 <tr><td><strong>Código postal</strong></td><td>Obligatorio</td><td>4 dígitos o código postal completo alfanumérico.</td><td>Ingresá un código postal válido.</td></tr>
 </tbody>
 </table>
-<div class="success"><strong>Criterio recomendado:</strong> si Piso y Departamento están separados, el supporting de Piso no debería mostrar ejemplos que parezcan “piso + departamento”.</div>
+<div class="success"><strong>Criterio recomendado:</strong> un selector de Piso de lista cerrada (como en las Propuestas 2 y 3) elimina de raíz la ambigüedad: el usuario no puede escribir “piso + departamento”. Si se opta por texto libre, el supporting de Piso no debería mostrar ejemplos como “1B”.</div>
 </section>
 <section id="conclusion">
 <h2>6. Conclusión / recomendación</h2>
 <div class="decision">
 <div class="decision-row"><strong>Recomendación UX fuerte</strong><p>Usar la <strong>Propuesta 2</strong>: Calle + Altura agrupados, switch “Agregar piso y departamento” y Piso + Departamento separados. Es la más clara y eficiente para el usuario.</p></div>
-<div class="decision-row"><strong>Recomendación de compromiso</strong><p>Si el cliente prioriza consistencia visual full-width, usar la <strong>Propuesta 3</strong>: todos los campos apilados, pero con microcopy corregida para Piso y Departamento.</p></div>
+<div class="decision-row"><strong>Recomendación de compromiso</strong><p>Si el cliente prioriza consistencia visual full-width, usar la <strong>Propuesta 3</strong>: todos los campos apilados, con Piso como selector de lista cerrada (PB y 1 a 20) para evitar la ambigüedad sin texto de ayuda.</p></div>
 <div class="decision-row"><strong>No recomendado</strong><p>No mantener el supporting original de Piso con el ejemplo “1B” si Departamento sigue existiendo como campo independiente.</p></div>
 </div>
 <div class="note"><strong>Frase para presentar al cliente:</strong> “Podemos mantener la consistencia visual del resto de la web, pero conviene conservar la separación funcional entre Calle, Altura, Piso y Departamento. Lo importante es no sugerir que un campo puede absorber información de otro, porque eso genera ambigüedad y menor calidad del dato.”</div>
