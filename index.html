@@ -98,7 +98,9 @@
     .confirm-card .mock-title{text-align:center;margin:8px 0 10px}
     .confirm-card .mock-sub{text-align:center;margin:0 0 22px}
     .terms{display:flex;align-items:center;gap:12px;margin:20px 2px 2px;font-size:18px;color:#2d3037}
-    .terms input{width:24px;height:24px;flex:0 0 auto;accent-color:var(--green);cursor:pointer}
+    .terms input{appearance:none;-webkit-appearance:none;width:26px;height:26px;flex:0 0 auto;border:2px solid var(--line-strong);border-radius:7px;background:#fff;cursor:pointer;position:relative;transition:.15s}
+    .terms input:checked{background:var(--navy);border-color:var(--navy)}
+    .terms input:checked::after{content:"";position:absolute;left:8px;top:4px;width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
     .terms a{font-weight:600;color:var(--navy)}
     .confirm-actions{display:flex;justify-content:center;margin-top:24px}
     .confirm-actions .primary{min-width:360px;padding:0 48px}
