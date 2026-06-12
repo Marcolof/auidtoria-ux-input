@@ -86,6 +86,20 @@
     .audit-side .ghost{font-size:16px}
     .audit-side .score{font-size:16px}
     .audit-side .results,.audit-side .status-pill{font-size:15px}
+    /* Pestañas de tipo de card en cada propuesta */
+    .card-tabs{display:flex;gap:6px;margin:0 0 18px;background:#eef1f6;border:1px solid var(--line);border-radius:999px;padding:5px}
+    .card-tab{flex:1;border:0;background:transparent;border-radius:999px;padding:12px 14px;font-family:inherit;font-size:16px;font-weight:700;color:#5a5e66;cursor:pointer;transition:.15s}
+    .card-tab.active{background:#fff;color:var(--navy);box-shadow:0 2px 8px rgba(16,24,40,.10)}
+    .card-tab:hover:not(.active){color:var(--navy)}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    .confirm-card .mock-title{text-align:center;margin:8px 0 10px}
+    .confirm-card .mock-sub{text-align:center;margin:0 0 22px}
+    .terms{display:flex;align-items:center;gap:12px;margin:20px 2px 2px;font-size:18px;color:#2d3037}
+    .terms input{width:24px;height:24px;flex:0 0 auto;accent-color:var(--green);cursor:pointer}
+    .terms a{font-weight:600;color:var(--navy)}
+    .confirm-actions{display:flex;justify-content:center;margin-top:24px}
+    .confirm-actions .primary{min-width:360px;padding:0 48px}
     @media (max-width:1100px){.layout{grid-template-columns:1fr;padding:18px}aside{position:relative;height:auto;top:auto}.nav{grid-template-columns:repeat(2,minmax(0,1fr))}.proposal-body{grid-template-columns:1fr}.form-row,.form-row.equal{grid-template-columns:1fr}.hero{padding:34px 28px}section{padding:26px}.score{grid-template-columns:120px minmax(0,1fr) 44px}}
     @media (max-width:680px){body{background:var(--bg)}.layout{padding:10px}.hero{padding:26px 20px;border-radius:20px}h1{font-size:34px}.lead{font-size:17px}section{padding:20px;border-radius:20px}.proposal-head{grid-template-columns:1fr}.proposal-badges{justify-content:flex-start}.proposal-body{padding:16px}.mock-bg{padding:0}.modal{padding:24px 18px;border-radius:22px}.mock-title{font-size:25px}.mock-sub,.input,.select,.switch-text,.footer-login,.step{font-size:16px}.actions{grid-template-columns:1fr}.primary{width:100%}.back{justify-self:center}.nav{grid-template-columns:1fr}.decision-row{grid-template-columns:1fr}}
     @media print{body{background:#fff}.layout{display:block;padding:0}aside{display:none}.hero,section,.proposal{box-shadow:none;break-inside:avoid}.proposal-body{grid-template-columns:1fr}.primary,.ghost{display:none}}
@@ -135,7 +149,7 @@
 </section>
 <section id="propuestas">
 <h2>2. Propuestas navegables con validación</h2>
-<p class="muted">Cada propuesta simula el diseño visual mostrado: modal blanco, paso 2 de 2, inputs grandes, botón amarillo y links azules. Los formularios tienen validación interactiva para probar criterios y casos borde.</p>
+<p class="muted">Cada propuesta tiene dos pestañas: <strong>Confirmación de datos</strong> (flujo nuevo, enfocado solo en domicilio para Mis Comunicaciones Digitales) y <strong>Creación de cuenta</strong> (el alta de usuario completo, paso 2 de 2). En ambas se conserva la variación UX de esa propuesta y la validación interactiva para probar criterios y casos borde.</p>
 <!-- Proposal 1 -->
 <article class="proposal" id="propuesta-cliente-original">
 <div class="proposal-head">
@@ -147,6 +161,22 @@
 </div>
 <div class="proposal-body">
 <div class="mock-bg">
+<div class="card-tabs"><button class="card-tab active" type="button" data-tab="confirm">Confirmación de datos</button><button class="card-tab" type="button" data-tab="account">Creación de cuenta</button></div>
+<div class="tab-panel active" data-panel="confirm">
+<form class="modal ux-form confirm-card" data-proposal="cliente-original" data-cardtype="confirm" novalidate="">
+<h3 class="mock-title">Necesitamos que completes información</h3>
+<p class="mock-sub">Esta información es requerida para usar los servicios de Mis Comunicaciones Digitales</p>
+<div class="form-grid">
+<div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div>
+<div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Piso</span><input class="input" data-validate="floor-client" name="piso" placeholder="Piso"/><div class="helper"><span class="ico">i</span><span>Podés ingresar números y letras. Ejemplos: <strong>1, 1B, PB, Planta baja.</strong></span></div><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento"/><div class="field-error"></div><div class="field-warning"></div></div>
+</div>
+<label class="terms"><input type="checkbox" name="terms"/><span>Aceptar <a href="javascript:void(0)">términos y condiciones</a></span></label>
+<div class="confirm-actions"><button class="primary" type="submit">Guardar</button></div>
+</form>
+</div>
+<div class="tab-panel" data-panel="account">
 <form class="modal ux-form" data-proposal="cliente-original" novalidate="">
 <div class="close">×</div>
 <div class="modal-top"><div><h3 class="mock-title">Creá tu usuario</h3><p class="mock-sub">Para finalizar, completá tu dirección.</p></div><div class="step">Paso 2 de 2</div></div>
@@ -162,6 +192,7 @@
 <div class="actions"><a class="back" href="javascript:void(0)">Atrás</a><button class="primary" type="submit">Registrarme</button></div>
 <div class="footer-login">¿Ya tenés cuenta? <a href="javascript:void(0)">Iniciar Sesión</a></div>
 </form>
+</div>
 </div>
 <aside class="audit-side">
 <div class="validation-panel"><h4>Prueba rápida</h4><ul class="validation-list live-list"><li>Completá campos y presioná “Registrarme”.</li></ul><div class="inline-tools"><button class="ghost" data-fill="valid-basic" type="button">Caso válido</button><button class="ghost" data-fill="ambiguous-floor" type="button">Piso 1B</button><button class="ghost" data-fill="empty" type="button">Vaciar</button></div><div class="results"></div></div>
@@ -181,6 +212,24 @@
 </div>
 <div class="proposal-body">
 <div class="mock-bg">
+<div class="card-tabs"><button class="card-tab active" type="button" data-tab="confirm">Confirmación de datos</button><button class="card-tab" type="button" data-tab="account">Creación de cuenta</button></div>
+<div class="tab-panel active" data-panel="confirm">
+<form class="modal ux-form confirm-card" data-proposal="recomendada-switch" data-cardtype="confirm" novalidate="">
+<h3 class="mock-title">Necesitamos que completes información</h3>
+<p class="mock-sub">Esta información es requerida para usar los servicios de Mis Comunicaciones Digitales</p>
+<div class="form-grid">
+<div class="form-row"><div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div><div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div></div>
+<div class="switch-line"><label class="switch"><input data-toggle="dept-fields" name="hasDept" type="checkbox"/><span class="slider"></span></label><span class="switch-text">Agregar piso y departamento</span></div>
+<div class="form-row equal conditional" data-conditional="dept-fields">
+<div class="field-wrap select-field"><span class="floating-label">Piso</span><select class="select" data-validate="floor-clean" name="piso"><option value="">Seleccionar</option><option value="PB">PB (Planta baja)</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option></select><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento"/><div class="field-error"></div><div class="field-warning"></div></div>
+</div>
+</div>
+<label class="terms"><input type="checkbox" name="terms"/><span>Aceptar <a href="javascript:void(0)">términos y condiciones</a></span></label>
+<div class="confirm-actions"><button class="primary" type="submit">Guardar</button></div>
+</form>
+</div>
+<div class="tab-panel" data-panel="account">
 <form class="modal ux-form" data-proposal="recomendada-switch" novalidate="">
 <div class="close">×</div>
 <div class="modal-top"><div><h3 class="mock-title">Creá tu usuario</h3><p class="mock-sub">Para finalizar, completá tu dirección.</p></div><div class="step">Paso 2 de 2</div></div>
@@ -198,6 +247,7 @@
 <div class="actions"><a class="back" href="javascript:void(0)">Atrás</a><button class="primary" type="submit">Registrarme</button></div>
 <div class="footer-login">¿Ya tenés cuenta? <a href="javascript:void(0)">Iniciar Sesión</a></div>
 </form>
+</div>
 </div>
 <aside class="audit-side">
 <div class="validation-panel"><h4>Prueba rápida</h4><ul class="validation-list live-list"><li>Activá o desactivá el switch y validá el comportamiento.</li></ul><div class="inline-tools"><button class="ghost" data-fill="valid-basic" type="button">Casa / sin depto</button><button class="ghost" data-fill="valid-dept" type="button">Con depto</button><button class="ghost" data-fill="empty" type="button">Vaciar</button></div><div class="results"></div></div>
@@ -217,6 +267,22 @@
 </div>
 <div class="proposal-body">
 <div class="mock-bg">
+<div class="card-tabs"><button class="card-tab active" type="button" data-tab="confirm">Confirmación de datos</button><button class="card-tab" type="button" data-tab="account">Creación de cuenta</button></div>
+<div class="tab-panel active" data-panel="confirm">
+<form class="modal ux-form confirm-card" data-proposal="cliente-corregida" data-cardtype="confirm" novalidate="">
+<h3 class="mock-title">Necesitamos que completes información</h3>
+<p class="mock-sub">Esta información es requerida para usar los servicios de Mis Comunicaciones Digitales</p>
+<div class="form-grid">
+<div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div>
+<div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap select-field"><span class="floating-label">Piso</span><select class="select" data-validate="floor-clean" name="piso"><option value="">Seleccionar</option><option value="PB">PB (Planta baja)</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option></select><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento (opcional)"/><div class="helper"><span class="ico">i</span><span>Podés ingresar letras, números o ambos. Ejemplos: <strong>A, B, 3, 1B.</strong></span></div><div class="field-error"></div><div class="field-warning"></div></div>
+</div>
+<label class="terms"><input type="checkbox" name="terms"/><span>Aceptar <a href="javascript:void(0)">términos y condiciones</a></span></label>
+<div class="confirm-actions"><button class="primary" type="submit">Guardar</button></div>
+</form>
+</div>
+<div class="tab-panel" data-panel="account">
 <form class="modal ux-form" data-proposal="cliente-corregida" novalidate="">
 <div class="close">×</div>
 <div class="modal-top"><div><h3 class="mock-title">Creá tu usuario</h3><p class="mock-sub">Para finalizar, completá tu dirección.</p></div><div class="step">Paso 2 de 2</div></div>
@@ -232,6 +298,7 @@
 <div class="actions"><a class="back" href="javascript:void(0)">Atrás</a><button class="primary" type="submit">Registrarme</button></div>
 <div class="footer-login">¿Ya tenés cuenta? <a href="javascript:void(0)">Iniciar Sesión</a></div>
 </form>
+</div>
 </div>
 <aside class="audit-side">
 <div class="validation-panel"><h4>Prueba rápida</h4><ul class="validation-list live-list"><li>Prueba la estructura full-width con Piso como selector de lista cerrada.</li></ul><div class="inline-tools"><button class="ghost" data-fill="valid-basic" type="button">Sin depto</button><button class="ghost" data-fill="valid-dept" type="button">Con depto</button><button class="ghost" data-fill="empty" type="button">Vaciar</button></div><div class="results"></div></div>
@@ -251,6 +318,22 @@
 </div>
 <div class="proposal-body">
 <div class="mock-bg">
+<div class="card-tabs"><button class="card-tab active" type="button" data-tab="confirm">Confirmación de datos</button><button class="card-tab" type="button" data-tab="account">Creación de cuenta</button></div>
+<div class="tab-panel active" data-panel="confirm">
+<form class="modal ux-form confirm-card" data-proposal="mvp-minimo" data-cardtype="confirm" novalidate="">
+<h3 class="mock-title">Necesitamos que completes información</h3>
+<p class="mock-sub">Esta información es requerida para usar los servicios de Mis Comunicaciones Digitales</p>
+<div class="form-grid">
+<div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div>
+<div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Piso</span><input class="input" data-validate="floor-clean" name="piso" placeholder="Piso (opcional): PB, 1, 2"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento (opcional): A, B, 1B"/><div class="field-error"></div><div class="field-warning"></div></div>
+</div>
+<label class="terms"><input type="checkbox" name="terms"/><span>Aceptar <a href="javascript:void(0)">términos y condiciones</a></span></label>
+<div class="confirm-actions"><button class="primary" type="submit">Guardar</button></div>
+</form>
+</div>
+<div class="tab-panel" data-panel="account">
 <form class="modal ux-form" data-proposal="mvp-minimo" novalidate="">
 <div class="close">×</div>
 <div class="modal-top"><div><h3 class="mock-title">Creá tu usuario</h3><p class="mock-sub">Para finalizar, completá tu dirección.</p></div><div class="step">Paso 2 de 2</div></div>
@@ -266,6 +349,7 @@
 <div class="actions"><a class="back" href="javascript:void(0)">Atrás</a><button class="primary" type="submit">Registrarme</button></div>
 <div class="footer-login">¿Ya tenés cuenta? <a href="javascript:void(0)">Iniciar Sesión</a></div>
 </form>
+</div>
 </div>
 <aside class="audit-side">
 <div class="validation-panel"><h4>Prueba rápida</h4><ul class="validation-list live-list"><li>Valida un MVP con mínima microcopy visible.</li></ul><div class="inline-tools"><button class="ghost" data-fill="valid-basic" type="button">Sin depto</button><button class="ghost" data-fill="valid-dept" type="button">Con depto</button><button class="ghost" data-fill="empty" type="button">Vaciar</button></div><div class="results"></div></div>
@@ -285,6 +369,26 @@
 </div>
 <div class="proposal-body">
 <div class="mock-bg">
+<div class="card-tabs"><button class="card-tab active" type="button" data-tab="confirm">Confirmación de datos</button><button class="card-tab" type="button" data-tab="account">Creación de cuenta</button></div>
+<div class="tab-panel active" data-panel="confirm">
+<form class="modal ux-form confirm-card" data-proposal="seccion-complementaria" data-cardtype="confirm" novalidate="">
+<h3 class="mock-title">Necesitamos que completes información</h3>
+<p class="mock-sub">Esta información es requerida para usar los servicios de Mis Comunicaciones Digitales</p>
+<div class="form-grid">
+<div class="form-row"><div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div><div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div></div>
+<div class="card soft" style="padding:14px 16px">
+<h4 style="text-transform:none;letter-spacing:0;font-size:16px;margin-bottom:10px">Datos complementarios del domicilio <span class="muted" style="font-weight:600">(opcional)</span></h4>
+<div class="form-row equal">
+<div class="field-wrap"><span class="floating-label">Piso</span><input class="input" data-validate="floor-clean" name="piso" placeholder="Piso: PB, 1, 2"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento: A, B, 1B"/><div class="field-error"></div><div class="field-warning"></div></div>
+</div>
+</div>
+</div>
+<label class="terms"><input type="checkbox" name="terms"/><span>Aceptar <a href="javascript:void(0)">términos y condiciones</a></span></label>
+<div class="confirm-actions"><button class="primary" type="submit">Guardar</button></div>
+</form>
+</div>
+<div class="tab-panel" data-panel="account">
 <form class="modal ux-form" data-proposal="seccion-complementaria" novalidate="">
 <div class="close">×</div>
 <div class="modal-top"><div><h3 class="mock-title">Creá tu usuario</h3><p class="mock-sub">Para finalizar, completá tu dirección.</p></div><div class="step">Paso 2 de 2</div></div>
@@ -304,6 +408,7 @@
 <div class="actions"><a class="back" href="javascript:void(0)">Atrás</a><button class="primary" type="submit">Registrarme</button></div>
 <div class="footer-login">¿Ya tenés cuenta? <a href="javascript:void(0)">Iniciar Sesión</a></div>
 </form>
+</div>
 </div>
 <aside class="audit-side">
 <div class="validation-panel"><h4>Prueba rápida</h4><ul class="validation-list live-list"><li>Valida una separación explícita entre domicilio principal y datos complementarios.</li></ul><div class="inline-tools"><button class="ghost" data-fill="valid-basic" type="button">Sin depto</button><button class="ghost" data-fill="valid-dept" type="button">Con depto</button><button class="ghost" data-fill="empty" type="button">Vaciar</button></div><div class="results"></div></div>
@@ -539,8 +644,22 @@
   });
   document.querySelectorAll('[data-fill]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const form = btn.closest('.proposal').querySelector('.ux-form');
+      const form = btn.closest('.proposal').querySelector('.tab-panel.active .ux-form') || btn.closest('.proposal').querySelector('.ux-form');
       fillForm(form, btn.dataset.fill);
+    });
+  });
+
+  // Pestañas de tipo de card (Confirmación de datos / Creación de cuenta)
+  document.querySelectorAll('.card-tabs').forEach(tabs => {
+    const mock = tabs.closest('.mock-bg');
+    tabs.addEventListener('click', e => {
+      const btn = e.target.closest('.card-tab');
+      if(!btn) return;
+      const key = btn.dataset.tab;
+      tabs.querySelectorAll('.card-tab').forEach(t => t.classList.toggle('active', t === btn));
+      mock.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.dataset.panel === key));
+      const form = mock.querySelector('.tab-panel.active .ux-form');
+      if(form) clearPanel(form);
     });
   });
 
