@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>UX TEST</title>
+<link rel="stylesheet" href="assets/app.css"/>
+</head>
+<body class="ux-shell">
+<main class="ux-wrap">
+<div class="ux-head">
+<button class="ux-back" id="back" type="button" aria-label="Volver"><span class="chev left"></span></button>
+<h1 class="ux-section-title" id="title">Sección</h1>
+</div>
+<p class="ux-empty">Pantalla en construcción.</p>
+</main>
+<script>
+(function(){
+  var raw = (location.hash || '').replace(/^#/, '');
+  var title = raw ? decodeURIComponent(raw) : '';
+  if(title){ document.getElementById('title').textContent = title; document.title = title + ' — UX TEST'; }
+  document.getElementById('back').addEventListener('click', function(){
+    if(history.length > 1){ history.back(); } else { location.href = '/'; }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+
+<html lang="es-AR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Auditoría UX — Campos de domicilio</title>
+<link rel="stylesheet" href="../assets/app.css"/>
+<style>
+    :root{
+      --bg:#f5f3ef;
+      --surface:#ffffff;
+      --ink:#202124;
+      --muted:#6f7177;
+      --line:#dde2e7;
+      --line-strong:#bfc7d1;
+      --navy:#0e2462;
+      --focus:#47A7F4;
+      --yellow:#ffca00;
+      --green:#2f9360;
+      --danger:#b42318;
+      --danger-bg:#fff1f0;
+      --warn:#9a6700;
+      --warn-bg:#fff8e1;
+      --ok:#147a48;
+      --ok-bg:#eaf7ef;
+      --info:#2457a6;
+      --info-bg:#eef5ff;
+      --shadow:0 20px 60px rgba(16,24,40,.14);
+      --radius:28px;
+      --radius-sm:12px;
+      --font: 'Gilroy', Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:linear-gradient(180deg,#3f2f29 0,#3f2f29 310px,var(--bg) 310px);color:var(--ink);font-family:var(--font);line-height:1.45;zoom:.75}
+    a{color:var(--navy)}
+    .doc-back{display:inline-flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;font-size:24px;letter-spacing:-.01em;margin:0 0 16px;opacity:.95}
+    .doc-back:hover{text-decoration:underline}
+    .doc-back .chev-l{width:11px;height:11px;border-left:3px solid #fff;border-bottom:3px solid #fff;transform:rotate(45deg);display:inline-block}
+    .layout{display:grid;grid-template-columns:320px minmax(0,1fr);gap:24px;max-width:1820px;margin:0 auto;padding:28px}
+    aside{position:sticky;top:20px;height:calc(100vh - 40px);align-self:start;background:rgba(255,255,255,.93);border:1px solid rgba(255,255,255,.72);box-shadow:0 18px 50px rgba(16,24,40,.13);border-radius:24px;padding:20px;backdrop-filter:blur(10px);overflow:auto}
+    .brand{font-weight:850;font-size:20px;letter-spacing:-.03em;color:var(--navy);margin:4px 0 6px}
+    .doc-subtitle{font-size:13px;color:var(--muted);margin:0 0 16px}
+    .nav{display:grid;gap:6px;margin:18px 0}
+    .nav a{text-decoration:none;color:#31343b;padding:10px 12px;border-radius:12px;font-weight:650;font-size:14px;border:1px solid transparent}
+    .nav a:hover,.nav a.active{background:#f4f6fb;border-color:#e2e7f0;color:var(--navy)}
+    .legend{border-top:1px solid var(--line);margin-top:18px;padding-top:16px;font-size:12px;color:var(--muted)}
+    .chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:700;color:#555;margin:3px 4px 3px 0}
+    .chip.ok{background:var(--ok-bg);color:var(--ok);border-color:#c5ead4}.chip.warn{background:var(--warn-bg);color:var(--warn);border-color:#f3df9e}.chip.bad{background:var(--danger-bg);color:var(--danger);border-color:#ffd0cc}.chip.info{background:var(--info-bg);color:var(--info);border-color:#cadeff}
+    main{min-width:0}
+    .hero{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:44px 48px;margin:0 0 26px;border:1px solid rgba(255,255,255,.7)}
+    h1{font-size:44px;line-height:1.05;margin:0 0 12px;letter-spacing:-.055em;color:#111827}
+    .lead{font-size:20px;color:#3d4148;margin:0 0 24px;max-width:900px}
+    .meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+    section{background:var(--surface);border:1px solid #e4e8ee;border-radius:24px;padding:34px;margin:0 0 26px;box-shadow:0 8px 24px rgba(16,24,40,.05)}
+    h2{font-size:30px;letter-spacing:-.04em;margin:0 0 14px;color:#111827}
+    h3{font-size:21px;letter-spacing:-.03em;margin:0 0 10px;color:#111827}
+    h4{font-size:15px;margin:0 0 8px;color:#111827;text-transform:uppercase;letter-spacing:.02em}
+    p{margin:0 0 14px}.muted{color:var(--muted)}.strong{font-weight:800}.small{font-size:13px}.note{padding:14px 16px;border-radius:16px;border:1px solid #d7e2f4;background:#f7fbff;color:#21304a;margin:16px 0}.warning{padding:14px 16px;border-radius:16px;border:1px solid #f3df9e;background:var(--warn-bg);color:#5b4300;margin:16px 0}.danger{padding:14px 16px;border-radius:16px;border:1px solid #ffd0cc;background:var(--danger-bg);color:#7a2017;margin:16px 0}.success{padding:14px 16px;border-radius:16px;border:1px solid #c5ead4;background:var(--ok-bg);color:#0f5735;margin:16px 0}
+    .grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{border:1px solid var(--line);border-radius:18px;padding:18px;background:#fff}.card.soft{background:#fbfcfe}
+    .kpi{display:flex;gap:14px;align-items:flex-start}.kpi-num{width:34px;height:34px;border-radius:12px;background:#f1f4fa;color:var(--navy);display:grid;place-items:center;font-weight:850;flex:0 0 34px}.kpi p{margin:0}.kpi strong{display:block;margin-bottom:2px}
+    .proposal{border:1px solid #dfe4ea;border-radius:26px;margin:20px 0 28px;overflow:hidden;background:#fff;box-shadow:0 10px 26px rgba(16,24,40,.06)}
+    .proposal-head{padding:22px 24px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:start;background:#fbfcfe}.proposal-title{margin:0;font-size:28px;letter-spacing:-.04em}.proposal-desc{margin:4px 0 0;color:var(--muted)}.proposal-badges{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}.proposal-body{display:grid;grid-template-columns:720px minmax(340px,1fr);gap:20px;padding:22px}.audit-side{display:grid;gap:14px;align-content:start}.score-grid{display:grid;gap:10px}.score{display:grid;grid-template-columns:140px minmax(0,1fr) 54px;gap:10px;align-items:center;font-size:13px}.bar{height:8px;background:#edf1f5;border-radius:999px;overflow:hidden}.bar span{display:block;height:100%;border-radius:999px;background:#8995a4}.bar.ok span{background:var(--ok)}.bar.warn span{background:#d59600}.bar.bad span{background:var(--danger)}
+    .mock-bg{background:transparent;padding:0;border-radius:0;border:0}.modal{background:#FAFAFA;border:1px solid #e6e6e3;border-radius:28px;padding:30px 34px;box-shadow:none;position:relative}.close{position:absolute;right:22px;top:16px;font-size:36px;line-height:1;color:#777;font-weight:250}.modal-top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:24px}.mock-title{font-size:30px;line-height:1.05;margin:0 48px 8px 0;letter-spacing:-.05em;font-weight:600}.step{font-size:18px;margin-right:26px;color:#24272d}.mock-sub{font-size:18px;margin:0 0 24px;color:#2d3037}.form-grid{display:grid;gap:16px}.form-row{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:20px}.form-row.equal{grid-template-columns:1fr 1fr}.field-wrap{position:relative}.input,.select{width:100%;height:58px;border:2px solid var(--line);border-radius:8px;background:#fff;color:#222;font-size:19px;font-weight:500;padding:0 18px;outline:none;font-family:inherit;transition:.15s border,.15s box-shadow}.select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,#000 50%),linear-gradient(135deg,#000 50%,transparent 50%);background-position:calc(100% - 23px) 25px,calc(100% - 16px) 25px;background-size:8px 8px,8px 8px;background-repeat:no-repeat;padding-right:46px}.input::placeholder{color:#5d5e66;opacity:1}.input:focus::placeholder{color:transparent}.input:focus,.select:focus{border-color:var(--focus);box-shadow:none}.floating-label{position:absolute;left:16px;top:-11px;background:#fff;padding:0 8px;color:var(--focus);font-size:15px;font-weight:600;line-height:20px;opacity:0;visibility:hidden;z-index:2;transition:.12s opacity}.field-wrap:focus-within .floating-label,.field-wrap:has(.input:not(:placeholder-shown)) .floating-label,.select-field .floating-label{opacity:1;visibility:visible}.select-field .floating-label{color:#696b72}.helper{display:flex;gap:8px;align-items:flex-start;font-size:14px;color:#8a8c93;margin:8px 2px 0}.helper .ico{width:17px;height:17px;border:1.5px solid #9a9da3;border-radius:50%;display:inline-grid;place-items:center;font-size:12px;font-weight:900;line-height:1;flex:0 0 17px}.field-error{font-size:13px;color:var(--danger);margin:6px 2px 0;display:none}.field-warning{font-size:13px;color:var(--warn);margin:6px 2px 0;display:none}.field-wrap.invalid .input,.field-wrap.invalid .select{border-color:var(--danger);box-shadow:0 0 0 3px rgba(180,35,24,.08)}.field-wrap.invalid .field-error{display:block}.field-wrap.has-warning .field-warning{display:block}.actions{display:grid;grid-template-columns:1fr 1.15fr;gap:22px;align-items:center;margin-top:20px}.back{justify-self:start;color:var(--navy);font-weight:850;text-decoration:underline;text-decoration-color:var(--yellow);text-decoration-thickness:3px;text-underline-offset:4px;font-size:18px}.primary{height:60px;border:0;border-radius:999px;background:var(--yellow);color:var(--navy);font-size:19px;font-weight:850;font-family:inherit;cursor:pointer}.primary:hover{filter:brightness(.98)}.footer-login{border-top:1px solid var(--line);margin-top:26px;padding-top:26px;text-align:center;font-size:18px}.footer-login a{font-weight:600;text-underline-offset:3px}.switch-line{display:flex;align-items:center;gap:14px}.switch{position:relative;width:64px;height:34px;display:inline-block;flex:0 0 auto}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;inset:0;background:#c8ced6;border-radius:999px;cursor:pointer;transition:.2s}.slider:before{content:"";position:absolute;width:24px;height:24px;left:5px;top:5px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.12)}.switch input:checked + .slider{background:var(--green)}.switch input:checked + .slider:before{transform:translateX(30px)}.switch-text{font-size:18px;color:#4a4c54}.conditional{display:none}.conditional.show{display:grid}.validation-panel{border:1px solid var(--line);background:#fbfcfe;border-radius:18px;padding:16px}.validation-panel h4{margin-bottom:10px}.validation-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}.validation-list li{display:flex;gap:8px;align-items:flex-start;font-size:14px;color:#424650}.validation-list li:before{content:"•";color:#9aa3af;font-weight:900}.validation-list li.ok:before{content:"✓";color:var(--ok)}.validation-list li.bad:before{content:"×";color:var(--danger)}.validation-list li.warn:before{content:"!";color:var(--warn)}.inline-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.ghost{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:750;cursor:pointer;color:#343840}.ghost:hover{background:#f7f9fc}.results{margin-top:10px;font-size:13px}.status-pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:850}.status-pill.ok{background:var(--ok-bg);color:var(--ok)}.status-pill.bad{background:var(--danger-bg);color:var(--danger)}.status-pill.warn{background:var(--warn-bg);color:var(--warn)}
+    table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;font-size:14px}th,td{padding:14px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}th{background:#f7f9fc;color:#343840;font-weight:850}tr:last-child td{border-bottom:0}.decision{display:grid;gap:12px}.decision-row{display:grid;grid-template-columns:190px minmax(0,1fr);gap:14px;padding:14px;border:1px solid var(--line);border-radius:14px;background:#fff}.decision-row strong{color:var(--navy)}
+    .print-note{font-size:12px;color:var(--muted);margin-top:14px}
+    /* Tamaño base/mínimo de lectura unificado (= .lead, 24px) fuera de las cards de propuestas */
+    .brand{font-size:24px}
+    .doc-subtitle{font-size:24px}
+    .nav a{font-size:22px}
+    .legend{font-size:24px}
+    .legend .chip{font-size:16px}
+    .legend .print-note{font-size:24px}
+    .lead{font-size:24px}
+    section>p{font-size:24px}
+    .grid-2 .kpi p{font-size:24px}.grid-2 .kpi strong{font-size:24px}
+    .grid-3 .card h3{font-size:24px}.grid-3 .card p{font-size:24px}
+    section>.note,section>.warning,section>.danger,section>.success{font-size:24px}
+    table{font-size:24px}
+    .decision-row p,.decision-row strong{font-size:24px}
+    /* Encabezado de la propuesta + tarjetas de auditoría: body unificado a 24px */
+    .proposal-desc{font-size:24px}
+    .audit-side .validation-panel h4,.audit-side .card h4{font-size:24px}
+    .audit-side .validation-list li{font-size:24px}
+    .audit-side .card p{font-size:24px}
+    .audit-side .note,.audit-side .success,.audit-side .danger,.audit-side .warning{font-size:24px}
+    .audit-side .ghost{font-size:16px}
+    .audit-side .score{font-size:16px}
+    .audit-side .results,.audit-side .status-pill{font-size:15px}
+    /* Pestañas de tipo de card en cada propuesta */
+    .card-tabs{display:flex;gap:6px;margin:0 0 18px;background:#eef1f6;border:1px solid var(--line);border-radius:999px;padding:5px}
+    .card-tab{flex:1;border:0;background:transparent;border-radius:999px;padding:12px 14px;font-family:inherit;font-size:16px;font-weight:700;color:#5a5e66;cursor:pointer;transition:.15s}
+    .card-tab.active{background:#fff;color:var(--navy);box-shadow:0 2px 8px rgba(16,24,40,.10)}
+    .card-tab:hover:not(.active){color:var(--navy)}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    .confirm-card .mock-title{text-align:center;margin:8px 0 10px}
+    .confirm-card .mock-sub{text-align:center;margin:0 0 22px}
+    .terms{display:flex;align-items:center;gap:12px;margin:20px 2px 2px;font-size:18px;color:#2d3037}
+    .terms input{appearance:none;-webkit-appearance:none;width:26px;height:26px;flex:0 0 auto;border:2px solid var(--line-strong);border-radius:7px;background:#fff;cursor:pointer;position:relative;transition:.15s}
+    .terms input:checked{background:var(--navy);border-color:var(--navy)}
+    .terms input:checked::after{content:"";position:absolute;left:8px;top:4px;width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+    .terms a{font-weight:600;color:var(--navy)}
+    .confirm-actions{display:flex;justify-content:center;margin-top:24px}
+    .confirm-actions .primary{min-width:360px;padding:0 48px}
+    @media (max-width:1100px){.layout{grid-template-columns:1fr;padding:18px}aside{position:relative;height:auto;top:auto}.nav{grid-template-columns:repeat(2,minmax(0,1fr))}.proposal-body{grid-template-columns:1fr}.form-row,.form-row.equal{grid-template-columns:1fr}.hero{padding:34px 28px}section{padding:26px}.score{grid-template-columns:120px minmax(0,1fr) 44px}}
+    @media (max-width:680px){body{background:var(--bg)}.layout{padding:10px}.hero{padding:26px 20px;border-radius:20px}h1{font-size:34px}.lead{font-size:17px}section{padding:20px;border-radius:20px}.proposal-head{grid-template-columns:1fr}.proposal-badges{justify-content:flex-start}.proposal-body{padding:16px}.mock-bg{padding:0}.modal{padding:24px 18px;border-radius:22px}.mock-title{font-size:25px}.mock-sub,.input,.select,.switch-text,.footer-login,.step{font-size:16px}.actions{grid-template-columns:1fr}.primary{width:100%}.back{justify-self:center}.nav{grid-template-columns:1fr}.decision-row{grid-template-columns:1fr}}
+    @media print{body{background:#fff}.layout{display:block;padding:0}aside{display:none}.hero,section,.proposal{box-shadow:none;break-inside:avoid}.proposal-body{grid-template-columns:1fr}.primary,.ghost{display:none}}
+  </style>
+</head>
+<body>
+<div class="layout">
+<aside>
+<div class="brand">Auditoría UX</div>
+<p class="doc-subtitle">Campos de domicilio · Registro de usuario · Paso 2 de 2</p>
+<nav aria-label="Navegación del documento" class="nav">
+<a href="#contexto">Definición del problema</a>
+<a href="#propuestas">Propuestas</a>
+<a href="#auditoria">Auditoría comparativa</a>
+<a href="#casuisticas">Casuísticas y principios UX</a>
+<a href="#validaciones">Criterios de validación</a>
+<a href="#conclusion">Conclusión</a>
+</nav>
+<div class="legend">
+<div class="chip ok">Recomendado</div>
+<div class="chip warn">Ajustable</div>
+<div class="chip bad">Riesgo</div>
+<div class="chip info">MVP</div>
+<p class="print-note">Tip: el documento puede imprimirse o exportarse como PDF desde el navegador.</p>
+</div>
+</aside>
+<main>
+<a class="doc-back" href="index.html"><span class="chev-l"></span>Volver a Auditoria ux inputs</a>
+<header class="hero">
+<h1>Evaluación UX y criterios funcionales para domicilio</h1>
+<p class="lead">Documento navegable para comparar propuestas de captura de domicilio, validar inputs y fundamentar la recomendación UX sin cambiar el alcance del MVP.</p>
+<div class="meta-row">
+<span class="chip info">Requerimiento base: Calle · Altura · Piso · Departamento</span>
+<span class="chip ok">Foco: claridad del dato</span>
+<span class="chip warn">Discusión: layout vs. estructura</span>
+</div>
+</header>
+<section id="contexto">
+<h2>1. Definición del problema</h2>
+<p>El requerimiento actual define cuatro inputs independientes para domicilio: <strong>Calle</strong>, <strong>Altura</strong>, <strong>Piso</strong> y <strong>Departamento</strong>. La discusión no debería centrarse solamente en si los campos se muestran en una misma fila o en filas separadas, sino en si cada campo captura un dato claro, no duplicado y validable.</p>
+<div class="grid-2">
+<div class="card soft kpi"><div class="kpi-num">1</div><p><strong>Problema de estructura</strong>Si el campo “Piso” permite ejemplos como <strong>1B</strong>, puede absorber información que corresponde al campo “Departamento”.</p></div>
+<div class="card soft kpi"><div class="kpi-num">2</div><p><strong>Problema de consistencia</strong>El cliente busca mantener un patrón visual full-width porque el resto de la web no usa campos agrupados en una misma fila.</p></div>
+<div class="card soft kpi"><div class="kpi-num">3</div><p><strong>Objetivo UX</strong>Conservar una captura estructurada del domicilio, reduciendo ambigüedad, errores de carga y validaciones confusas.</p></div>
+<div class="card soft kpi"><div class="kpi-num">4</div><p><strong>Alcance MVP</strong>No se agregan campos nuevos como torre, lote, manzana o unidad funcional. Solo se definen criterios para los campos existentes.</p></div>
+</div>
+<div class="note"><strong>Clave para la conversación:</strong> agrupar “Calle + Altura” en una fila es una decisión de layout. Mantener “Calle” y “Altura” como inputs separados es una decisión de estructura de datos.</div>
+</section>
+<section id="propuestas">
+<h2>2. Propuestas navegables con validación</h2>
+<p class="muted">Cada propuesta tiene dos pestañas: <strong>Confirmación de datos</strong> (flujo nuevo, enfocado solo en domicilio para Mis Comunicaciones Digitales) y <strong>Creación de cuenta</strong> (el alta de usuario completo, paso 2 de 2). En ambas se conserva la variación UX de esa propuesta y la validación interactiva para probar criterios y casos borde.</p>
+<!-- Proposal 1 -->
+<article class="proposal" id="propuesta-cliente-original">
+<div class="proposal-head">
+<div>
+<h3 class="proposal-title">Propuesta 1 · Cliente original</h3>
+<p class="proposal-desc">Campos full-width, Piso siempre visible y texto de ayuda que permite números y letras, incluyendo “1B”.</p>
+</div>
+<div class="proposal-badges"><span class="chip warn">Consistente visualmente</span><span class="chip bad">Riesgo semántico</span></div>
+</div>
+<div class="proposal-body">
+<div class="mock-bg">
+<div class="card-tabs"><button class="card-tab active" type="button" data-tab="confirm">Confirmación de datos</button><button class="card-tab" type="button" data-tab="account">Creación de cuenta</button></div>
+<div class="tab-panel active" data-panel="confirm">
+<form class="modal ux-form confirm-card" data-proposal="cliente-original" data-cardtype="confirm" novalidate="">
+<h3 class="mock-title">Necesitamos que completes información</h3>
+<p class="mock-sub">Esta información es requerida para usar los servicios de Mis Comunicaciones Digitales</p>
+<div class="form-grid">
+<div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div>
+<div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Piso</span><input class="input" data-validate="floor-client" name="piso" placeholder="Piso"/><div class="helper"><span class="ico">i</span><span>Podés ingresar números y letras. Ejemplos: <strong>1, 1B, PB, Planta baja.</strong></span></div><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento"/><div class="field-error"></div><div class="field-warning"></div></div>
+</div>
+<label class="terms"><input type="checkbox" name="terms"/><span>Aceptar <a href="javascript:void(0)">términos y condiciones</a></span></label>
+<div class="confirm-actions"><button class="primary" type="submit">Guardar</button></div>
+</form>
+</div>
+<div class="tab-panel" data-panel="account">
+<form class="modal ux-form" data-proposal="cliente-original" novalidate="">
+<div class="close">×</div>
+<div class="modal-top"><div><h3 class="mock-title">Creá tu usuario</h3><p class="mock-sub">Para finalizar, completá tu dirección.</p></div><div class="step">Paso 2 de 2</div></div>
+<div class="form-grid">
+<div class="field-wrap select-field"><span class="floating-label">Provincia</span><select class="select" data-validate="province" name="provincia"><option value="">Seleccionar</option><option>Córdoba</option><option>Buenos Aires</option><option>Santa Fe</option></select><div class="field-error"></div></div>
+<div class="field-wrap select-field"><span class="floating-label">Localidad</span><select class="select" data-validate="locality" name="localidad"><option value="">Seleccionar</option><option>Córdoba Capital</option><option>Villa Allende</option><option>Río Cuarto</option></select><div class="field-error"></div></div>
+<div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div>
+<div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Piso</span><input class="input" data-validate="floor-client" name="piso" placeholder="Piso"/><div class="helper"><span class="ico">i</span><span>Podés ingresar números y letras. Ejemplos: <strong>1, 1B, PB, Planta baja.</strong></span></div><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Código postal</span><input class="input" data-validate="postal" name="cp" placeholder="Código postal"/><div class="field-error"></div></div>
+</div>
+<div class="actions"><a class="back" href="javascript:void(0)">Atrás</a><button class="primary" type="submit">Registrarme</button></div>
+<div class="footer-login">¿Ya tenés cuenta? <a href="javascript:void(0)">Iniciar Sesión</a></div>
+</form>
+</div>
+</div>
+<aside class="audit-side">
+<div class="validation-panel"><h4>Prueba rápida</h4><ul class="validation-list live-list"><li>Completá campos y presioná “Registrarme”.</li></ul><div class="inline-tools"><button class="ghost" data-fill="valid-basic" type="button">Caso válido</button><button class="ghost" data-fill="ambiguous-floor" type="button">Piso 1B</button><button class="ghost" data-fill="empty" type="button">Vaciar</button></div><div class="results"></div></div>
+<div class="card"><h4>Lectura UX</h4><p>La consistencia visual es buena, pero el texto de ayuda de Piso permite que el usuario cargue “piso + departamento” en un único campo.</p><div class="danger"><strong>Riesgo principal:</strong> “1B” puede interpretarse como Piso 1 + Departamento B.</div></div>
+<div class="score-grid"><div class="score"><span>Claridad</span><div class="bar warn"><span style="width:55%"></span></div><strong>Media</strong></div><div class="score"><span>Consistencia visual</span><div class="bar ok"><span style="width:90%"></span></div><strong>Alta</strong></div><div class="score"><span>Calidad del dato</span><div class="bar bad"><span style="width:45%"></span></div><strong>Baja</strong></div><div class="score"><span>MVP</span><div class="bar ok"><span style="width:88%"></span></div><strong>Alta</strong></div></div>
+</aside>
+</div>
+</article>
+<!-- Proposal 2 -->
+<article class="proposal" id="propuesta-recomendada">
+<div class="proposal-head">
+<div>
+<h3 class="proposal-title">Propuesta 2 · Agrupación semántica con switch</h3>
+<p class="proposal-desc">Calle + Altura en una fila. Con el switch aparecen Piso (selector de lista cerrada) y Departamento, solo si el usuario los necesita.</p>
+</div>
+<div class="proposal-badges"><span class="chip ok">Recomendada UX</span><span class="chip warn">Requiere lógica condicional</span></div>
+</div>
+<div class="proposal-body">
+<div class="mock-bg">
+<div class="card-tabs"><button class="card-tab active" type="button" data-tab="confirm">Confirmación de datos</button><button class="card-tab" type="button" data-tab="account">Creación de cuenta</button></div>
+<div class="tab-panel active" data-panel="confirm">
+<form class="modal ux-form confirm-card" data-proposal="recomendada-switch" data-cardtype="confirm" novalidate="">
+<h3 class="mock-title">Necesitamos que completes información</h3>
+<p class="mock-sub">Esta información es requerida para usar los servicios de Mis Comunicaciones Digitales</p>
+<div class="form-grid">
+<div class="form-row"><div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div><div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div></div>
+<div class="switch-line"><label class="switch"><input data-toggle="dept-fields" name="hasDept" type="checkbox"/><span class="slider"></span></label><span class="switch-text">Agregar piso y departamento</span></div>
+<div class="form-row equal conditional" data-conditional="dept-fields">
+<div class="field-wrap select-field"><span class="floating-label">Piso</span><select class="select" data-validate="floor-clean" name="piso"><option value="">Seleccionar</option><option value="PB">PB (Planta baja)</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option></select><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento"/><div class="field-error"></div><div class="field-warning"></div></div>
+</div>
+</div>
+<label class="terms"><input type="checkbox" name="terms"/><span>Aceptar <a href="javascript:void(0)">términos y condiciones</a></span></label>
+<div class="confirm-actions"><button class="primary" type="submit">Guardar</button></div>
+</form>
+</div>
+<div class="tab-panel" data-panel="account">
+<form class="modal ux-form" data-proposal="recomendada-switch" novalidate="">
+<div class="close">×</div>
+<div class="modal-top"><div><h3 class="mock-title">Creá tu usuario</h3><p class="mock-sub">Para finalizar, completá tu dirección.</p></div><div class="step">Paso 2 de 2</div></div>
+<div class="form-grid">
+<div class="field-wrap select-field"><span class="floating-label">Provincia</span><select class="select" data-validate="province" name="provincia"><option value="">Seleccionar</option><option>Córdoba</option><option>Buenos Aires</option><option>Santa Fe</option></select><div class="field-error"></div></div>
+<div class="field-wrap select-field"><span class="floating-label">Localidad</span><select class="select" data-validate="locality" name="localidad"><option value="">Seleccionar</option><option>Córdoba Capital</option><option>Villa Allende</option><option>Río Cuarto</option></select><div class="field-error"></div></div>
+<div class="form-row"><div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div><div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div></div>
+<div class="switch-line"><label class="switch"><input data-toggle="dept-fields" name="hasDept" type="checkbox"/><span class="slider"></span></label><span class="switch-text">Agregar piso y departamento</span></div>
+<div class="form-row equal conditional" data-conditional="dept-fields">
+<div class="field-wrap select-field"><span class="floating-label">Piso</span><select class="select" data-validate="floor-clean" name="piso"><option value="">Seleccionar</option><option value="PB">PB (Planta baja)</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option></select><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento"/><div class="field-error"></div><div class="field-warning"></div></div>
+</div>
+<div class="field-wrap"><span class="floating-label">Código postal</span><input class="input" data-validate="postal" name="cp" placeholder="Código postal"/><div class="field-error"></div></div>
+</div>
+<div class="actions"><a class="back" href="javascript:void(0)">Atrás</a><button class="primary" type="submit">Registrarme</button></div>
+<div class="footer-login">¿Ya tenés cuenta? <a href="javascript:void(0)">Iniciar Sesión</a></div>
+</form>
+</div>
+</div>
+<aside class="audit-side">
+<div class="validation-panel"><h4>Prueba rápida</h4><ul class="validation-list live-list"><li>Activá o desactivá el switch y validá el comportamiento.</li></ul><div class="inline-tools"><button class="ghost" data-fill="valid-basic" type="button">Casa / sin depto</button><button class="ghost" data-fill="valid-dept" type="button">Con depto</button><button class="ghost" data-fill="empty" type="button">Vaciar</button></div><div class="results"></div></div>
+<div class="card"><h4>Lectura UX</h4><p>Aplica progressive disclosure: no muestra campos que no son necesarios para usuarios que no tienen piso/departamento. Además, Piso es un selector de lista cerrada, por lo que no admite valores ambiguos como “1B”.</p><div class="success"><strong>Fortaleza:</strong> agrupa datos relacionados sin mezclar responsabilidades y normaliza el dato de Piso.</div></div>
+<div class="score-grid"><div class="score"><span>Claridad</span><div class="bar ok"><span style="width:90%"></span></div><strong>Alta</strong></div><div class="score"><span>Consistencia visual</span><div class="bar warn"><span style="width:62%"></span></div><strong>Media</strong></div><div class="score"><span>Calidad del dato</span><div class="bar ok"><span style="width:92%"></span></div><strong>Alta</strong></div><div class="score"><span>MVP</span><div class="bar warn"><span style="width:68%"></span></div><strong>Media</strong></div></div>
+</aside>
+</div>
+</article>
+<!-- Proposal 3 -->
+<article class="proposal" id="propuesta-cliente-corregida">
+<div class="proposal-head">
+<div>
+<h3 class="proposal-title">Propuesta 3 · Cliente corregida</h3>
+<p class="proposal-desc">Mantiene todos los inputs full-width, pero Piso pasa a ser un selector de lista cerrada (PB y 1 a 20): elimina la ambigüedad sin necesidad de texto de ayuda.</p>
+</div>
+<div class="proposal-badges"><span class="chip ok">Compromiso recomendado</span><span class="chip info">MVP simple</span></div>
+</div>
+<div class="proposal-body">
+<div class="mock-bg">
+<div class="card-tabs"><button class="card-tab active" type="button" data-tab="confirm">Confirmación de datos</button><button class="card-tab" type="button" data-tab="account">Creación de cuenta</button></div>
+<div class="tab-panel active" data-panel="confirm">
+<form class="modal ux-form confirm-card" data-proposal="cliente-corregida" data-cardtype="confirm" novalidate="">
+<h3 class="mock-title">Necesitamos que completes información</h3>
+<p class="mock-sub">Esta información es requerida para usar los servicios de Mis Comunicaciones Digitales</p>
+<div class="form-grid">
+<div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div>
+<div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap select-field"><span class="floating-label">Piso</span><select class="select" data-validate="floor-clean" name="piso"><option value="">Seleccionar</option><option value="PB">PB (Planta baja)</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option></select><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento (opcional)"/><div class="helper"><span class="ico">i</span><span>Podés ingresar letras, números o ambos. Ejemplos: <strong>A, B, 3, 1B.</strong></span></div><div class="field-error"></div><div class="field-warning"></div></div>
+</div>
+<label class="terms"><input type="checkbox" name="terms"/><span>Aceptar <a href="javascript:void(0)">términos y condiciones</a></span></label>
+<div class="confirm-actions"><button class="primary" type="submit">Guardar</button></div>
+</form>
+</div>
+<div class="tab-panel" data-panel="account">
+<form class="modal ux-form" data-proposal="cliente-corregida" novalidate="">
+<div class="close">×</div>
+<div class="modal-top"><div><h3 class="mock-title">Creá tu usuario</h3><p class="mock-sub">Para finalizar, completá tu dirección.</p></div><div class="step">Paso 2 de 2</div></div>
+<div class="form-grid">
+<div class="field-wrap select-field"><span class="floating-label">Provincia</span><select class="select" data-validate="province" name="provincia"><option value="">Seleccionar</option><option>Córdoba</option><option>Buenos Aires</option><option>Santa Fe</option></select><div class="field-error"></div></div>
+<div class="field-wrap select-field"><span class="floating-label">Localidad</span><select class="select" data-validate="locality" name="localidad"><option value="">Seleccionar</option><option>Córdoba Capital</option><option>Villa Allende</option><option>Río Cuarto</option></select><div class="field-error"></div></div>
+<div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div>
+<div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap select-field"><span class="floating-label">Piso</span><select class="select" data-validate="floor-clean" name="piso"><option value="">Seleccionar</option><option value="PB">PB (Planta baja)</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option></select><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento (opcional)"/><div class="helper"><span class="ico">i</span><span>Podés ingresar letras, números o ambos. Ejemplos: <strong>A, B, 3, 1B.</strong></span></div><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Código postal</span><input class="input" data-validate="postal" name="cp" placeholder="Código postal"/><div class="field-error"></div></div>
+</div>
+<div class="actions"><a class="back" href="javascript:void(0)">Atrás</a><button class="primary" type="submit">Registrarme</button></div>
+<div class="footer-login">¿Ya tenés cuenta? <a href="javascript:void(0)">Iniciar Sesión</a></div>
+</form>
+</div>
+</div>
+<aside class="audit-side">
+<div class="validation-panel"><h4>Prueba rápida</h4><ul class="validation-list live-list"><li>Prueba la estructura full-width con Piso como selector de lista cerrada.</li></ul><div class="inline-tools"><button class="ghost" data-fill="valid-basic" type="button">Sin depto</button><button class="ghost" data-fill="valid-dept" type="button">Con depto</button><button class="ghost" data-fill="empty" type="button">Vaciar</button></div><div class="results"></div></div>
+<div class="card"><h4>Lectura UX</h4><p>Es la alternativa de compromiso: mantiene la consistencia visual full-width de la web y elimina la ambigüedad de Piso usando una lista cerrada de opciones.</p><div class="success"><strong>Ventaja:</strong> no requiere switch ni lógica condicional, y el dato de Piso queda normalizado.</div></div>
+<div class="score-grid"><div class="score"><span>Claridad</span><div class="bar ok"><span style="width:82%"></span></div><strong>Alta</strong></div><div class="score"><span>Consistencia visual</span><div class="bar ok"><span style="width:92%"></span></div><strong>Alta</strong></div><div class="score"><span>Calidad del dato</span><div class="bar ok"><span style="width:90%"></span></div><strong>Alta</strong></div><div class="score"><span>MVP</span><div class="bar ok"><span style="width:92%"></span></div><strong>Alta</strong></div></div>
+</aside>
+</div>
+</article>
+<!-- Proposal 4 -->
+<article class="proposal" id="propuesta-mvp-minimo">
+<div class="proposal-head">
+<div>
+<h3 class="proposal-title">Propuesta 4 · MVP mínimo sin ayudas extensas</h3>
+<p class="proposal-desc">Todos los campos visibles, Piso y Departamento opcionales, sin supporting permanente. Los ejemplos aparecen solo en placeholder.</p>
+</div>
+<div class="proposal-badges"><span class="chip info">Menor fricción de implementación</span><span class="chip warn">Menos orientación</span></div>
+</div>
+<div class="proposal-body">
+<div class="mock-bg">
+<div class="card-tabs"><button class="card-tab active" type="button" data-tab="confirm">Confirmación de datos</button><button class="card-tab" type="button" data-tab="account">Creación de cuenta</button></div>
+<div class="tab-panel active" data-panel="confirm">
+<form class="modal ux-form confirm-card" data-proposal="mvp-minimo" data-cardtype="confirm" novalidate="">
+<h3 class="mock-title">Necesitamos que completes información</h3>
+<p class="mock-sub">Esta información es requerida para usar los servicios de Mis Comunicaciones Digitales</p>
+<div class="form-grid">
+<div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div>
+<div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Piso</span><input class="input" data-validate="floor-clean" name="piso" placeholder="Piso (opcional): PB, 1, 2"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento (opcional): A, B, 1B"/><div class="field-error"></div><div class="field-warning"></div></div>
+</div>
+<label class="terms"><input type="checkbox" name="terms"/><span>Aceptar <a href="javascript:void(0)">términos y condiciones</a></span></label>
+<div class="confirm-actions"><button class="primary" type="submit">Guardar</button></div>
+</form>
+</div>
+<div class="tab-panel" data-panel="account">
+<form class="modal ux-form" data-proposal="mvp-minimo" novalidate="">
+<div class="close">×</div>
+<div class="modal-top"><div><h3 class="mock-title">Creá tu usuario</h3><p class="mock-sub">Para finalizar, completá tu dirección.</p></div><div class="step">Paso 2 de 2</div></div>
+<div class="form-grid">
+<div class="field-wrap select-field"><span class="floating-label">Provincia</span><select class="select" data-validate="province" name="provincia"><option value="">Seleccionar</option><option>Córdoba</option><option>Buenos Aires</option><option>Santa Fe</option></select><div class="field-error"></div></div>
+<div class="field-wrap select-field"><span class="floating-label">Localidad</span><select class="select" data-validate="locality" name="localidad"><option value="">Seleccionar</option><option>Córdoba Capital</option><option>Villa Allende</option><option>Río Cuarto</option></select><div class="field-error"></div></div>
+<div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div>
+<div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Piso</span><input class="input" data-validate="floor-clean" name="piso" placeholder="Piso (opcional): PB, 1, 2"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento (opcional): A, B, 1B"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Código postal</span><input class="input" data-validate="postal" name="cp" placeholder="Código postal"/><div class="field-error"></div></div>
+</div>
+<div class="actions"><a class="back" href="javascript:void(0)">Atrás</a><button class="primary" type="submit">Registrarme</button></div>
+<div class="footer-login">¿Ya tenés cuenta? <a href="javascript:void(0)">Iniciar Sesión</a></div>
+</form>
+</div>
+</div>
+<aside class="audit-side">
+<div class="validation-panel"><h4>Prueba rápida</h4><ul class="validation-list live-list"><li>Valida un MVP con mínima microcopy visible.</li></ul><div class="inline-tools"><button class="ghost" data-fill="valid-basic" type="button">Sin depto</button><button class="ghost" data-fill="valid-dept" type="button">Con depto</button><button class="ghost" data-fill="empty" type="button">Vaciar</button></div><div class="results"></div></div>
+<div class="card"><h4>Lectura UX</h4><p>Reduce complejidad y texto, pero puede ser menos claro para usuarios que no sepan qué formatos acepta Piso.</p><div class="warning"><strong>Trade-off:</strong> simple de construir, menos explicativo.</div></div>
+<div class="score-grid"><div class="score"><span>Claridad</span><div class="bar warn"><span style="width:72%"></span></div><strong>Media</strong></div><div class="score"><span>Consistencia visual</span><div class="bar ok"><span style="width:92%"></span></div><strong>Alta</strong></div><div class="score"><span>Calidad del dato</span><div class="bar warn"><span style="width:74%"></span></div><strong>Media</strong></div><div class="score"><span>MVP</span><div class="bar ok"><span style="width:96%"></span></div><strong>Alta</strong></div></div>
+</aside>
+</div>
+</article>
+<!-- Proposal 5 -->
+<article class="proposal" id="propuesta-seccion-complementaria">
+<div class="proposal-head">
+<div>
+<h3 class="proposal-title">Propuesta 5 · Datos complementarios agrupados</h3>
+<p class="proposal-desc">Separa dirección principal de datos complementarios, sin sumar nuevos campos fuera del requerimiento.</p>
+</div>
+<div class="proposal-badges"><span class="chip ok">Muy clara</span><span class="chip warn">Más estructura visual</span></div>
+</div>
+<div class="proposal-body">
+<div class="mock-bg">
+<div class="card-tabs"><button class="card-tab active" type="button" data-tab="confirm">Confirmación de datos</button><button class="card-tab" type="button" data-tab="account">Creación de cuenta</button></div>
+<div class="tab-panel active" data-panel="confirm">
+<form class="modal ux-form confirm-card" data-proposal="seccion-complementaria" data-cardtype="confirm" novalidate="">
+<h3 class="mock-title">Necesitamos que completes información</h3>
+<p class="mock-sub">Esta información es requerida para usar los servicios de Mis Comunicaciones Digitales</p>
+<div class="form-grid">
+<div class="form-row"><div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div><div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div></div>
+<div class="card soft" style="padding:14px 16px">
+<h4 style="text-transform:none;letter-spacing:0;font-size:16px;margin-bottom:10px">Datos complementarios del domicilio <span class="muted" style="font-weight:600">(opcional)</span></h4>
+<div class="form-row equal">
+<div class="field-wrap"><span class="floating-label">Piso</span><input class="input" data-validate="floor-clean" name="piso" placeholder="Piso: PB, 1, 2"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento: A, B, 1B"/><div class="field-error"></div><div class="field-warning"></div></div>
+</div>
+</div>
+</div>
+<label class="terms"><input type="checkbox" name="terms"/><span>Aceptar <a href="javascript:void(0)">términos y condiciones</a></span></label>
+<div class="confirm-actions"><button class="primary" type="submit">Guardar</button></div>
+</form>
+</div>
+<div class="tab-panel" data-panel="account">
+<form class="modal ux-form" data-proposal="seccion-complementaria" novalidate="">
+<div class="close">×</div>
+<div class="modal-top"><div><h3 class="mock-title">Creá tu usuario</h3><p class="mock-sub">Para finalizar, completá tu dirección.</p></div><div class="step">Paso 2 de 2</div></div>
+<div class="form-grid">
+<div class="field-wrap select-field"><span class="floating-label">Provincia</span><select class="select" data-validate="province" name="provincia"><option value="">Seleccionar</option><option>Córdoba</option><option>Buenos Aires</option><option>Santa Fe</option></select><div class="field-error"></div></div>
+<div class="field-wrap select-field"><span class="floating-label">Localidad</span><select class="select" data-validate="locality" name="localidad"><option value="">Seleccionar</option><option>Córdoba Capital</option><option>Villa Allende</option><option>Río Cuarto</option></select><div class="field-error"></div></div>
+<div class="form-row"><div class="field-wrap"><span class="floating-label">Calle</span><input class="input" data-validate="street" name="calle" placeholder="Calle"/><div class="field-error"></div></div><div class="field-wrap"><span class="floating-label">Altura</span><input class="input" data-validate="number" inputmode="numeric" name="altura" placeholder="Altura"/><div class="field-error"></div><div class="field-warning"></div></div></div>
+<div class="field-wrap"><span class="floating-label">Código postal</span><input class="input" data-validate="postal" name="cp" placeholder="Código postal"/><div class="field-error"></div></div>
+<div class="card soft" style="padding:14px 16px">
+<h4 style="text-transform:none;letter-spacing:0;font-size:16px;margin-bottom:10px">Datos complementarios del domicilio <span class="muted" style="font-weight:600">(opcional)</span></h4>
+<div class="form-row equal">
+<div class="field-wrap"><span class="floating-label">Piso</span><input class="input" data-validate="floor-clean" name="piso" placeholder="Piso: PB, 1, 2"/><div class="field-error"></div><div class="field-warning"></div></div>
+<div class="field-wrap"><span class="floating-label">Departamento</span><input class="input" data-validate="apartment" name="departamento" placeholder="Departamento: A, B, 1B"/><div class="field-error"></div><div class="field-warning"></div></div>
+</div>
+</div>
+</div>
+<div class="actions"><a class="back" href="javascript:void(0)">Atrás</a><button class="primary" type="submit">Registrarme</button></div>
+<div class="footer-login">¿Ya tenés cuenta? <a href="javascript:void(0)">Iniciar Sesión</a></div>
+</form>
+</div>
+</div>
+<aside class="audit-side">
+<div class="validation-panel"><h4>Prueba rápida</h4><ul class="validation-list live-list"><li>Valida una separación explícita entre domicilio principal y datos complementarios.</li></ul><div class="inline-tools"><button class="ghost" data-fill="valid-basic" type="button">Sin depto</button><button class="ghost" data-fill="valid-dept" type="button">Con depto</button><button class="ghost" data-fill="empty" type="button">Vaciar</button></div><div class="results"></div></div>
+<div class="card"><h4>Lectura UX</h4><p>Ayuda a explicar que Piso y Departamento son datos complementarios sin necesidad de switch.</p><div class="note"><strong>Buen balance:</strong> mantiene estructura y evita campos ocultos, pero agrega una sección visual nueva.</div></div>
+<div class="score-grid"><div class="score"><span>Claridad</span><div class="bar ok"><span style="width:88%"></span></div><strong>Alta</strong></div><div class="score"><span>Consistencia visual</span><div class="bar warn"><span style="width:70%"></span></div><strong>Media</strong></div><div class="score"><span>Calidad del dato</span><div class="bar ok"><span style="width:88%"></span></div><strong>Alta</strong></div><div class="score"><span>MVP</span><div class="bar warn"><span style="width:74%"></span></div><strong>Media</strong></div></div>
+</aside>
+</div>
+</article>
+</section>
+<section id="auditoria">
+<h2>3. Auditoría comparativa</h2>
+<table>
+<thead><tr><th>Propuesta</th><th>Fortaleza</th><th>Riesgo</th><th>Recomendación</th></tr></thead>
+<tbody>
+<tr><td><strong>1. Cliente original</strong></td><td>Alta consistencia visual con el resto de la web.</td><td>El ejemplo “1B” en Piso puede mezclar piso y departamento.</td><td><span class="chip bad">No recomendar sin ajustes</span></td></tr>
+<tr><td><strong>2. Agrupación con switch</strong></td><td>Reduce carga visual y respeta separación semántica.</td><td>Introduce lógica condicional y rompe un poco el patrón full-width.</td><td><span class="chip ok">Recomendada UX</span></td></tr>
+<tr><td><strong>3. Cliente corregida</strong></td><td>Conserva full-width y elimina la ambigüedad con un selector de Piso de lista cerrada.</td><td>Piso queda acotado a una lista (sin texto libre); muestra los campos aunque no apliquen.</td><td><span class="chip ok">Mejor compromiso</span></td></tr>
+<tr><td><strong>4. MVP mínimo</strong></td><td>Muy simple de implementar.</td><td>Menos guía para formatos válidos.</td><td><span class="chip info">Aceptable para MVP</span></td></tr>
+<tr><td><strong>5. Complementarios agrupados</strong></td><td>Diferencia dirección principal y datos internos.</td><td>Agrega una jerarquía visual nueva.</td><td><span class="chip warn">Buena si aceptan sección</span></td></tr>
+</tbody>
+</table>
+<div class="warning"><strong>Hallazgo principal:</strong> la propuesta original del cliente no falla por usar campos full-width. Falla porque el supporting text de “Piso” permite cargar información que podría pertenecer a “Departamento”.</div>
+</section>
+<section id="casuisticas">
+<h2>4. Casuísticas y principios UX</h2>
+<div class="grid-3">
+<div class="card"><h3>Separación semántica</h3><p>Si el requerimiento define Calle, Altura, Piso y Departamento como inputs independientes, cada campo debe tener una responsabilidad clara.</p></div>
+<div class="card"><h3>Progressive disclosure</h3><p>El switch es válido si se quiere ocultar información no relevante para usuarios que no necesitan cargar piso/departamento.</p></div>
+<div class="card"><h3>Consistencia contextual</h3><p>La consistencia visual importa, pero no debería forzar que datos distintos se mezclen en un mismo campo.</p></div>
+<div class="card"><h3>Prevención de errores</h3><p>La interfaz debe evitar ejemplos ambiguos que habiliten duplicación: Piso “1B” + Departamento “B”.</p></div>
+<div class="card"><h3>MVP responsable</h3><p>No hace falta agregar torre, lote o manzana. Sí hace falta definir validaciones mínimas para los campos existentes.</p></div>
+<div class="card"><h3>Claridad de microcopy</h3><p>Los ejemplos deben enseñar dónde va cada dato: Piso = PB, 1, 2. Departamento = A, B, 1B.</p></div>
+</div>
+<div class="note"><strong>Casuística crítica:</strong> “1B” puede ser un departamento completo en algunos edificios, pero si existe un campo separado llamado “Departamento”, conviene reservar ese ejemplo para Departamento, no para Piso.</div>
+</section>
+<section id="validaciones">
+<h2>5. Criterios de validación sugeridos</h2>
+<table>
+<thead><tr><th>Campo</th><th>Obligatoriedad</th><th>Criterio MVP</th><th>Mensaje sugerido</th></tr></thead>
+<tbody>
+<tr><td><strong>Provincia</strong></td><td>Obligatorio</td><td>Debe seleccionarse una opción.</td><td>Seleccioná una provincia.</td></tr>
+<tr><td><strong>Localidad</strong></td><td>Obligatorio</td><td>Debe seleccionarse una opción.</td><td>Seleccioná una localidad.</td></tr>
+<tr><td><strong>Calle</strong></td><td>Obligatorio</td><td>Texto con letras, números y caracteres habituales. No debería aceptar solo números.</td><td>Ingresá el nombre de la calle.</td></tr>
+<tr><td><strong>Altura</strong></td><td>Obligatorio</td><td>Numérico. “S/N” solo si negocio decide aceptarlo.</td><td>Ingresá una altura válida.</td></tr>
+<tr><td><strong>Piso</strong></td><td>Opcional o condicional</td><td>Recomendado: selector de lista cerrada (PB y 1 a 20). Si es texto libre, validar valores cortos.</td><td>Seleccioná un piso válido.</td></tr>
+<tr><td><strong>Departamento</strong></td><td>Opcional o condicional</td><td>Letras, números o ambos: A, B, 3, 1B.</td><td>Ingresá un departamento válido.</td></tr>
+<tr><td><strong>Código postal</strong></td><td>Obligatorio</td><td>4 dígitos o código postal completo alfanumérico.</td><td>Ingresá un código postal válido.</td></tr>
+</tbody>
+</table>
+<div class="success"><strong>Criterio recomendado:</strong> un selector de Piso de lista cerrada (como en las Propuestas 2 y 3) elimina de raíz la ambigüedad: el usuario no puede escribir “piso + departamento”. Si se opta por texto libre, el supporting de Piso no debería mostrar ejemplos como “1B”.</div>
+</section>
+<section id="conclusion">
+<h2>6. Conclusión / recomendación</h2>
+<div class="decision">
+<div class="decision-row"><strong>Recomendación UX fuerte</strong><p>Usar la <strong>Propuesta 2</strong>: Calle + Altura agrupados, switch “Agregar piso y departamento” y Piso + Departamento separados. Es la más clara y eficiente para el usuario.</p></div>
+<div class="decision-row"><strong>Recomendación de compromiso</strong><p>Si el cliente prioriza consistencia visual full-width, usar la <strong>Propuesta 3</strong>: todos los campos apilados, con Piso como selector de lista cerrada (PB y 1 a 20) para evitar la ambigüedad sin texto de ayuda.</p></div>
+<div class="decision-row"><strong>No recomendado</strong><p>No mantener el supporting original de Piso con el ejemplo “1B” si Departamento sigue existiendo como campo independiente.</p></div>
+</div>
+<div class="note"><strong>Frase para presentar al cliente:</strong> “Podemos mantener la consistencia visual del resto de la web, pero conviene conservar la separación funcional entre Calle, Altura, Piso y Departamento. Lo importante es no sugerir que un campo puede absorber información de otro, porque eso genera ambigüedad y menor calidad del dato.”</div>
+</section>
+</main>
+</div>
+<script>
+(function(){
+  const messages = {
+    province: 'Seleccioná una provincia.',
+    locality: 'Seleccioná una localidad.',
+    street: 'Ingresá el nombre de la calle.',
+    number: 'Ingresá una altura válida. Usá solo números.',
+    floor: 'Ingresá un piso válido. Ejemplos: PB, Planta baja, 1, 2.',
+    apartment: 'Ingresá un departamento válido. Ejemplos: A, B, 3, 1B.',
+    postal: 'Ingresá un código postal válido.',
+    conditional: 'Si activás esta opción, completá al menos Piso o Departamento.'
+  };
+
+  function normalize(v){ return (v || '').trim(); }
+  function setState(field, state, msg){
+    const wrap = field.closest('.field-wrap');
+    if(!wrap) return;
+    wrap.classList.remove('invalid','has-warning');
+    const err = wrap.querySelector('.field-error');
+    const warn = wrap.querySelector('.field-warning');
+    if(err) err.textContent = '';
+    if(warn) warn.textContent = '';
+    if(state === 'invalid'){
+      wrap.classList.add('invalid');
+      if(err) err.textContent = msg || 'Revisá este campo.';
+    }
+    if(state === 'warning'){
+      wrap.classList.add('has-warning');
+      if(warn) warn.textContent = msg || 'Revisá este dato.';
+    }
+  }
+
+  function validateField(field, proposal){
+    const type = field.dataset.validate;
+    if(!type) return {ok:true};
+    const v = normalize(field.value);
+    setState(field, 'clear');
+    if(type === 'province' || type === 'locality'){
+      if(!v){ setState(field, 'invalid', type === 'province' ? messages.province : messages.locality); return {ok:false}; }
+      return {ok:true};
+    }
+    if(type === 'street'){
+      if(!v || v.length < 2 || /^\d+$/.test(v)){ setState(field, 'invalid', messages.street); return {ok:false}; }
+      if(!/^[A-Za-zÁÉÍÓÚÜáéíóúüÑñ0-9 .,'°º\-]{2,}$/.test(v)){ setState(field, 'invalid', 'Usá letras, números y caracteres habituales.'); return {ok:false}; }
+      return {ok:true};
+    }
+    if(type === 'number'){
+      if(!v){ setState(field, 'invalid', messages.number); return {ok:false}; }
+      if(/^s\/?n$/i.test(v)){ setState(field, 'warning', '“S/N” requiere definición de negocio. Para MVP se recomienda validar altura numérica.'); return {ok:true, warning:true}; }
+      if(!/^\d{1,6}$/.test(v)){ setState(field, 'invalid', messages.number); return {ok:false}; }
+      return {ok:true};
+    }
+    if(type === 'postal'){
+      if(!v){ setState(field, 'invalid', messages.postal); return {ok:false}; }
+      if(!/^(\d{4}|[A-Za-z]\d{4}[A-Za-z]{3})$/.test(v)){ setState(field, 'invalid', 'Usá 4 dígitos o el código postal completo.'); return {ok:false}; }
+      return {ok:true};
+    }
+    if(type === 'floor-clean'){
+      if(!v) return {ok:true};
+      if(!/^[A-Za-zÁÉÍÓÚÜáéíóúüÑñ0-9 ]{1,15}$/.test(v)){ setState(field, 'invalid', messages.floor); return {ok:false}; }
+      if(/^\d+[A-Za-z]$/.test(v)){ setState(field, 'warning', 'Este valor parece combinar piso y departamento. Si corresponde, cargá la letra en Departamento.'); return {ok:true, warning:true}; }
+      return {ok:true};
+    }
+    if(type === 'floor-client'){
+      if(!v) return {ok:true};
+      if(!/^[A-Za-zÁÉÍÓÚÜáéíóúüÑñ0-9 ]{1,15}$/.test(v)){ setState(field, 'invalid', messages.floor); return {ok:false}; }
+      if(/^\d+[A-Za-z]$/.test(v)){ setState(field, 'warning', 'Posible ambigüedad: “' + v + '” puede significar piso + departamento.'); return {ok:true, warning:true}; }
+      return {ok:true};
+    }
+    if(type === 'apartment'){
+      if(!v) return {ok:true};
+      if(!/^[A-Za-zÁÉÍÓÚÜáéíóúüÑñ0-9\-/ ]{1,12}$/.test(v)){ setState(field, 'invalid', messages.apartment); return {ok:false}; }
+      return {ok:true};
+    }
+    return {ok:true};
+  }
+
+  function validateForm(form, silent){
+    let ok = true, warnings = 0;
+    form.querySelectorAll('[data-validate]').forEach(field => {
+      if(field.closest('.conditional') && !field.closest('.conditional').classList.contains('show')) return;
+      const res = validateField(field, form.dataset.proposal);
+      if(!res.ok) ok = false;
+      if(res.warning) warnings++;
+    });
+    const hasDept = form.querySelector('[name="hasDept"]');
+    if(hasDept && hasDept.checked){
+      const piso = normalize(form.querySelector('[name="piso"]')?.value);
+      const dept = normalize(form.querySelector('[name="departamento"]')?.value);
+      if(!piso && !dept){
+        const pisoField = form.querySelector('[name="piso"]');
+        setState(pisoField, 'invalid', messages.conditional);
+        ok = false;
+      }
+    }
+    updatePanel(form, ok, warnings);
+    if(!silent){
+      const first = form.querySelector('.field-wrap.invalid input,.field-wrap.invalid select');
+      if(first) first.focus();
+    }
+    return {ok, warnings};
+  }
+
+  function updatePanel(form, ok, warnings){
+    const prop = form.closest('.proposal');
+    const list = prop?.querySelector('.live-list');
+    const res = prop?.querySelector('.results');
+    if(!list || !res) return;
+    const items = [];
+    const requiredFilled = Array.from(form.querySelectorAll('[data-validate="province"],[data-validate="locality"],[data-validate="street"],[data-validate="number"],[data-validate="postal"]')).every(f => normalize(f.value));
+    items.push(`<li class="${requiredFilled?'ok':'bad'}">Campos obligatorios: ${requiredFilled?'completos':'incompletos'}.</li>`);
+    const floor = normalize(form.querySelector('[name="piso"]')?.value);
+    const dept = normalize(form.querySelector('[name="departamento"]')?.value);
+    if(floor || dept) items.push(`<li class="ok">Datos complementarios: ${floor ? 'Piso “'+escapeHtml(floor)+'”' : 'sin piso'} · ${dept ? 'Departamento “'+escapeHtml(dept)+'”' : 'sin departamento'}.</li>`);
+    else items.push(`<li class="warn">Piso y Departamento vacíos: válido si son opcionales o si el switch está apagado.</li>`);
+    if(warnings > 0) items.push(`<li class="warn">Hay ${warnings} advertencia${warnings>1?'s':''} de ambigüedad o criterio de negocio.</li>`);
+    list.innerHTML = items.join('');
+    res.innerHTML = ok ? `<span class="status-pill ${warnings?'warn':'ok'}">${warnings?'Válido con advertencias':'Formulario válido'}</span>` : `<span class="status-pill bad">Formulario con errores</span>`;
+  }
+
+  function escapeHtml(str){ return str.replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
+
+  function fillForm(form, preset){
+    const set = (name,val) => { const el = form.querySelector(`[name="${name}"]`); if(el) el.value = val; };
+    const toggle = form.querySelector('[name="hasDept"]');
+    if(preset === 'empty'){
+      form.reset();
+      form.querySelectorAll('.conditional').forEach(c => c.classList.remove('show'));
+    } else if(preset === 'valid-basic'){
+      form.reset(); set('provincia','Córdoba'); set('localidad','Córdoba Capital'); set('calle','Av. Colón'); set('altura','350'); set('cp','5000');
+      if(toggle) toggle.checked = false;
+      form.querySelectorAll('.conditional').forEach(c => c.classList.remove('show'));
+    } else if(preset === 'valid-dept'){
+      form.reset(); set('provincia','Córdoba'); set('localidad','Córdoba Capital'); set('calle','San Martín'); set('altura','1245'); set('piso','4'); set('departamento','B'); set('cp','X5000ABC');
+      if(toggle){ toggle.checked = true; form.querySelectorAll('[data-conditional="dept-fields"]').forEach(c => c.classList.add('show')); }
+    } else if(preset === 'ambiguous-floor'){
+      form.reset(); set('provincia','Córdoba'); set('localidad','Córdoba Capital'); set('calle','San Martín'); set('altura','1245'); set('piso','1B'); set('departamento',''); set('cp','5000');
+      if(toggle){ toggle.checked = true; form.querySelectorAll('[data-conditional="dept-fields"]').forEach(c => c.classList.add('show')); }
+    }
+    form.querySelectorAll('.field-wrap').forEach(w => w.classList.remove('invalid','has-warning'));
+    if(preset === 'empty') clearPanel(form);
+    else validateForm(form, true);
+  }
+
+  function clearPanel(form){
+    const prop = form.closest('.proposal');
+    const list = prop?.querySelector('.live-list');
+    const res = prop?.querySelector('.results');
+    if(list) list.innerHTML = '<li>Campos listos para completar. La validación aparece al interactuar o al presionar “Registrarme”.</li>';
+    if(res) res.innerHTML = '';
+  }
+
+  document.querySelectorAll('.ux-form').forEach(form => {
+    form.addEventListener('submit', e => { e.preventDefault(); validateForm(form); });
+    form.addEventListener('input', e => {
+      if(e.target.matches('input,select')){
+        validateField(e.target, form.dataset.proposal);
+        clearPanel(form);
+      }
+    });
+    form.addEventListener('change', e => {
+      if(e.target.matches('[data-toggle]')){
+        const key = e.target.dataset.toggle;
+        form.querySelectorAll(`[data-conditional="${key}"]`).forEach(c => c.classList.toggle('show', e.target.checked));
+        form.querySelectorAll(`[data-conditional="${key}"] .field-wrap`).forEach(w => w.classList.remove('invalid','has-warning'));
+      }
+      if(e.target.matches('input,select')) validateField(e.target, form.dataset.proposal);
+      clearPanel(form);
+    });
+    fillForm(form, 'empty');
+  });
+  document.querySelectorAll('[data-fill]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const form = btn.closest('.proposal').querySelector('.tab-panel.active .ux-form') || btn.closest('.proposal').querySelector('.ux-form');
+      fillForm(form, btn.dataset.fill);
+    });
+  });
+
+  // Pestañas de tipo de card (Confirmación de datos / Creación de cuenta)
+  document.querySelectorAll('.card-tabs').forEach(tabs => {
+    const mock = tabs.closest('.mock-bg');
+    tabs.addEventListener('click', e => {
+      const btn = e.target.closest('.card-tab');
+      if(!btn) return;
+      const key = btn.dataset.tab;
+      tabs.querySelectorAll('.card-tab').forEach(t => t.classList.toggle('active', t === btn));
+      mock.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.dataset.panel === key));
+      const form = mock.querySelector('.tab-panel.active .ux-form');
+      if(form) clearPanel(form);
+    });
+  });
+
+  // Piso (select): mostrar "PB (Planta baja)" en la lista, pero "PB" una vez elegido
+  document.querySelectorAll('select[name="piso"]').forEach(sel => {
+    const opt = sel.querySelector('option[value="PB"]');
+    if(!opt) return;
+    const long = 'PB (Planta baja)', short = 'PB';
+    const expand = () => { opt.textContent = long; };
+    const collapse = () => { opt.textContent = (sel.value === 'PB') ? short : long; };
+    sel.addEventListener('mousedown', expand);
+    sel.addEventListener('focus', expand);
+    sel.addEventListener('change', collapse);
+    sel.addEventListener('blur', collapse);
+  });
+
+  const navLinks = Array.from(document.querySelectorAll('.nav a'));
+  const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const onScroll = () => {
+    const y = window.scrollY + 140;
+    let current = sections[0];
+    sections.forEach(s => { if(s.offsetTop <= y) current = s; });
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
+  };
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+</body>
+</html>
