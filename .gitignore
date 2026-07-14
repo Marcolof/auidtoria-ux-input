@@ -1,2 +1,5 @@
 # Fuentes Gilroy no usadas en la web (solo se versionan los .ttf referenciados en index.html)
 Font/*.otf
+
+# HTML de referencia descargado (queda solo en local, no se publica)
+mic-1061-telefono-celular/html de referencia/

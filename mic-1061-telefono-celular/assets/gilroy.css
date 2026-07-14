@@ -1,0 +1,8 @@
+/* Remapeo de las familias Gilroy que usa estilos.css a las fuentes .ttf del proyecto (/Font).
+   El HTML de referencia no traía los archivos de fuente, así que las declaramos acá. */
+@font-face{font-family:'Gilroy-Light';src:url('../../Font/Gilroy-Light.ttf') format('truetype');font-display:swap}
+@font-face{font-family:'Gilroy-Regular';src:url('../../Font/Gilroy-Regular.ttf') format('truetype');font-display:swap}
+@font-face{font-family:'Gilroy-Medium';src:url('../../Font/Gilroy-Medium.ttf') format('truetype');font-display:swap}
+@font-face{font-family:'Gilroy-SemiBold';src:url('../../Font/Gilroy-Bold.ttf') format('truetype');font-display:swap}
+@font-face{font-family:'Gilroy-Semibold';src:url('../../Font/Gilroy-Bold.ttf') format('truetype');font-display:swap}
+@font-face{font-family:'Gilroy-Bold';src:url('../../Font/Gilroy-Bold.ttf') format('truetype');font-display:swap}

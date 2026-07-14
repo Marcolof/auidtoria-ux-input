@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MIC-003 · Registro 1.1 — UX TEST</title>
+<link rel="stylesheet" href="../assets/gilroy.css"/>
+<link rel="stylesheet" href="../assets/bootstrap.css"/>
+<link rel="stylesheet" href="../assets/estilos.css"/>
+<link rel="stylesheet" href="../assets/bootstrap-icons.css"/>
+<style>
+  body{margin:0;background:#efe9e4;min-height:100vh}
+  #app-backdrop{position:fixed;inset:0;background:rgba(20,16,14,.5);z-index:1040}
+  .modal.show{display:block}
+  .app-back{position:fixed;top:18px;left:18px;z-index:1060;display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #e2e2e2;border-radius:999px;padding:10px 16px;font-family:'Gilroy-Semibold','Gilroy-Bold',system-ui,sans-serif;font-size:15px;color:#111;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.14)}
+  .app-back:hover{background:#f6f6f6}
+</style>
+</head>
+<body>
+<a class="app-back" href="../">&#8249; Volver</a>
+<div id="app-backdrop"></div>
+<div class="modal fade rounded p-3 show" id="register-modal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-modal="true" style="display: block;">
+    <div class="modal-dialog" role="document" style="max-width: 580px;">
+        <div class="modal-content" style="border-radius: 25px;min-height: 600px;background-color:#fafafa">
+            <div class="modal-header justify-content-end border-0" style="padding-bottom:0px">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px">
+                <div class="container-fluid">
+                    <div class="row">
+                        <form role="form" id="form-step-1" method="POST" onsubmit="return false;">
+                            <input type="hidden" name="_token" value="OwLGp8M8PUYY7ba3kxiRbMpeCjChF9hRpK8RwS3j">
+                            <!--  register step-1  -->
+                            <div class="card card-step-1 border-0 d-flex" style="background-color: #fafafa;">
+                                <div class="card-body" style="padding-bottom: 0px;">
+                                    <div class="card-title d-flex justify-content-between">
+                                        <h5 class="tituloCrearCuenta">Creá tu Cuenta</h5>
+                                        <span class="pasos">Paso 1 de 2</span>
+                                    </div>
+                                    <div class="row">
+                                    </div>
+                                    <!--  row nombre / apellido -->
+                                    <div class="row  ">
+                                        <div class="col-md-6 col-12 mb-2">
+                                            <div class="form-group form-floating">
+                                                <input id="name" type="text" class="form-control" name="name" value="" maxlength="30" required="" tabindex="1" placeholder="Nombre" data-validation="onlyLetters" data-checkfield="true">
+                                                <label for="name" class="label-register">Nombre</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-2">
+                                            <div class="form-group form-floating">
+                                                <input id="lastname" type="text" class="form-control" name="lastname" value="" maxlength="30" required="" tabindex="2" placeholder="Apellido" data-validation="onlyLetters" data-checkfield="true">
+                                                <label for="lastname" class="label-register">Apellido</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row tipo / nro documento -->
+                                    <div class="row ">
+                                        <div class="col-md-4 col-12 mb-2">
+                                            <div class="form-group form-floating">
+                                                <select class="form-select" name="doc_type" id="doc_type" data-checkfield="true">
+                                                    <option value="" selected="selected">Seleccione</option>
+                                                                                                                                                            <option value="1">DNI</option>
+                                                                                                                                                        </select>
+                                                <label for="doc_type" class="label-register">Tipo</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 col-12 mb-2">
+                                            <div class="form-group form-floating">
+                                                <input id="doc_number" type="text" class="form-control" name="doc_number" value="" maxlength="10" required="" tabindex="4" placeholder="Documento de identidad" data-validation="onlyNumbers" data-checkfield="true">
+                                                <label for="doc_number" class="label-register">Documento de identidad</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row CUIT / Rubro  -->
+                                    <div class="row ">
+                                        <div class="col-md-6 col-12 mb-2">
+                                            <div class="form-group form-floating">
+                                                <input id="cuit_number" type="text" class="form-control" name="cuit_number" value="" maxlength="11" tabindex="5" placeholder="CUIT" data-validation="onlyNumbers" data-checkfield="false">
+                                                <!-- <small class="text-muted">CUIT requerido sólo para empresas.</small> -->
+                                                <label for="cuit_number" style="z-index: 0;" class="label-register">CUIT <small style="font-size: 12px;">(requerido sólo para empresas)</small></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-2">
+                                            <div class="form-group form-floating">
+                                                <select class="form-select" id="rubro" name="rubro" tabindex="6" data-checkfield="true" onchange="updateRubroDesc()">
+                                                    <option value="" selected="selected">Seleccione</option>
+                                                                                                                                                            <option value="1" data-desc="Alimentos y Bebidas">
+                                                        Alimentos y Bebidas
+                                                    </option>
+                                                                                                        <option value="2" data-desc="Arte y Música">
+                                                        Arte y Música
+                                                    </option>
+                                                                                                        <option value="3" data-desc="Bazar y Cocina">
+                                                        Bazar y Cocina
+                                                    </option>
+                                                                                                        <option value="4" data-desc="Bebes">
+                                                        Bebes
+                                                    </option>
+                                                                                                        <option value="5" data-desc="Belleza y Perfumería">
+                                                        Belleza y Perfumería
+                                                    </option>
+                                                                                                        <option value="6" data-desc="Botánica">
+                                                        Botánica
+                                                    </option>
+                                                                                                        <option value="7" data-desc="Centros Comerciales y Supermercados">
+                                                        Centros Comerciales y Supermercados
+                                                    </option>
+                                                                                                        <option value="8" data-desc="Deco y Hogar">
+                                                        Deco y Hogar
+                                                    </option>
+                                                                                                        <option value="9" data-desc="Deportes">
+                                                        Deportes
+                                                    </option>
+                                                                                                        <option value="10" data-desc="Electrodomésticos">
+                                                        Electrodomésticos
+                                                    </option>
+                                                                                                        <option value="11" data-desc="Ferretería y Construcción">
+                                                        Ferretería y Construcción
+                                                    </option>
+                                                                                                        <option value="12" data-desc="Indumentaria, Calzado y Accesorios">
+                                                        Indumentaria, Calzado y Accesorios
+                                                    </option>
+                                                                                                        <option value="13" data-desc="Industrias y Oficinas">
+                                                        Industrias y Oficinas
+                                                    </option>
+                                                                                                        <option value="14" data-desc="Juguetería y Librería">
+                                                        Juguetería y Librería
+                                                    </option>
+                                                                                                        <option value="15" data-desc="Limpieza">
+                                                        Limpieza
+                                                    </option>
+                                                                                                        <option value="16" data-desc="Mascotas">
+                                                        Mascotas
+                                                    </option>
+                                                                                                        <option value="17" data-desc="Salud">
+                                                        Salud
+                                                    </option>
+                                                                                                        <option value="18" data-desc="SexShop">
+                                                        SexShop
+                                                    </option>
+                                                                                                        <option value="19" data-desc="Tabaquería">
+                                                        Tabaquería
+                                                    </option>
+                                                                                                        <option value="20" data-desc="Tecnología E Informática">
+                                                        Tecnología E Informática
+                                                    </option>
+                                                                                                        <option value="21" data-desc="Textil">
+                                                        Textil
+                                                    </option>
+                                                                                                        <option value="22" data-desc="Vehículos y Accesorios">
+                                                        Vehículos y Accesorios
+                                                    </option>
+                                                                                                        <option value="23" data-desc="Otros (espacio a completar por el usuario)">
+                                                        Otros (espacio a completar por el usuario)
+                                                    </option>
+                                                                                                                                                        </select>
+                                                <label for="rubro" class="label-register">Rubro</label>
+                                                <input type="hidden" id="rubro_desc" name="rubro_desc" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row custom Rubro  -->
+                                    <div class="row   d-none row-custom_rubro">
+                                        <div class="col mb-2">
+                                            <div class="form-group form-floating">
+                                                <input id="custom_rubro" type="text" class="form-control" name="custom_rubro" value="" maxlength="30" tabindex="7" placeholder="Indicá el rubro de tu empresa" data-validation="onlyLetters" data-checkfield="false">
+                                                <label for="custom_rubro" class="label-register">Indicá el rubro de tu empresa</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- row celular -->
+                                    <div class="row">
+
+                                        <!-- Código de Área -->
+                                        <div class="col-4 mb-2">
+                                            <div class="form-group form-floating">
+                                                <input id="codigo_area_celular" type="text" class="form-control" name="codigo_area_celular" value="" pattern="[1-9][0-9]{1,3}" minlength="2" maxlength="4" required="" tabindex="8" placeholder="Cód. Área" data-validation="onlyNumbers" data-checkfield="true">
+                                                <label for="codigo_area_celular" class="label-register">Cód. Área (sin 0)</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Celular -->
+                                        <div class="col-8 mb-2">
+                                            <div class="form-group form-floating">
+                                                <input id="celular" type="text" class="form-control" name="celular" value="" pattern="[0-9]{6,8}" minlength="6" maxlength="8" required="" tabindex="9" placeholder="Celular" data-validation="onlyNumbers" data-checkfield="true">
+                                                <label for="celular" class="label-register">Celular (sin 15)</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!--  row email  -->
+                                    <div class="row ">
+                                        <div class="col mb-2">
+                                            <div class="form-group form-floating">
+                                                <input id="email" type="text" class="form-control" name="email" value="" maxlength="190" required="" tabindex="9" placeholder="Correo electrónico" data-validation="onlyEmail" data-checkfield="true">
+                                                <label for="email" class="label-register">Correo electrónico</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row password / password confirm  -->
+                                    <div class="row ">
+                                        <div class="col-md-6 col-12 mb-2">
+                                            <div class="form-group form-floating input-group">
+                                            <!-- <input style="z-index: 1;" id="password" type="password" class="form-control border-end-0 form-register passwordRegister " name="password" value="" maxlength="20" required tabindex=10 placeholder="Contrase&ntilde;a" data-checkfield="true"> -->
+                                            <input style="z-index: 1;" id="password_register" type="password" class="form-control border-end-0 passwordRegister password-field" name="password" value="" maxlength="20" required="" tabindex="10" placeholder="Contraseña" data-checkfield="true">
+                                                <label for="password" class="label-register">Contraseña</label>
+                                                <button class="btn btn-outline-secondary btn-addon-password bi-eye-fill border-start-0" style="border-top-right-radius: var(--bs-border-radius);border-bottom-right-radius: var(--bs-border-radius);" type="button" id="password_button" onclick="ShowPassword(&#39;password_register&#39;)">
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-2">
+                                            <div class="form-group form-floating input-group">
+                                                <input style="z-index: 1;" id="password_confirm" type="password" class="form-control border-end-0" name="password_confirm" value="" maxlength="20" required="" tabindex="11" placeholder="Confirmar Contraseña" data-checkfield="true">
+                                                <label for="password_confirm" class="label-register">Confirmar Contraseña</label>
+                                                <button class="btn btn-outline-secondary btn-addon-password bi-eye-fill border-start-0" style="border-top-right-radius: var(--bs-border-radius);border-bottom-right-radius: var(--bs-border-radius);" type="button" id="password_confirm_button" onclick="ShowPassword(&#39;password_confirm&#39;)">
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row terms  -->
+                                    <div class="row my-3">
+                                        <div class="col">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="terms" name="terms" required="">
+                                                <label class="form-check-label termCondiciones" for="terms" tabindex="12">
+                                                    Aceptar
+                                                    <a href="https://www.correoargentino.com.ar/MiCorreo/public/terminosycondiciones" target="_blank" style="color: #152663;">
+                                                        términos y condiciones
+                                                    </a>
+                                                </label>
+                                                <div id="terms-error" class="help-block d-none alert alert-danger">
+                                                    <strong style="color:#58151c"></strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row errors front  -->
+                                    <div id="form-step-1-errors" class="d-none alert alert-danger">
+                                    <!-- <small class="text-danger fw-semibold">* Campo obligatorio</small> -->
+                                        <small class="" style="color:#58151c">* Campo obligatorio</small>
+                                    </div>
+                                    <!--  row errors back  -->
+                                    <div id="form-step-1-errors-back" class="alert alert-danger d-none">
+                                        <!-- <p style="white-space: pre-line;"></p> -->
+                                        <p style="margin:0;"></p>
+                                    </div>
+                                    <!--  row btn  -->
+                                    <div class="row my-3">
+                                        <div class="col d-flex justify-content-center">
+                                            <div class="form-group">
+                                                <button id="btn-next-step" type="button" class="btn btn-correo-primary px-4 " tabindex="13">
+                                                    Siguiente
+                                                    <span class="loading-spinner spinner-border spinner-border-sm" role="status" aria-hidden="true" hidden="hidden"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row account  -->
+                                    <div class="row border-top">
+                                        <div class="col p-3 d-flex justify-content-center">
+                                            <label for="login-link" class="yaTieneCuenta">
+                                                ¿Ya tenés cuenta?
+                                                <a href="https://www.correoargentino.com.ar/MiCorreo/public" target="_self" tabindex="14" style="color: #152663;">
+                                                    Iniciar Sesión
+                                                </a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  end register step-1  -->
+                        </form>
+                        <!--  register step-2-fisica  -->
+                        <form role="form" id="form-step-2" method="POST" onsubmit="return false;">
+                            <input type="hidden" name="_token" value="OwLGp8M8PUYY7ba3kxiRbMpeCjChF9hRpK8RwS3j">
+                            <input type="hidden" name="stepType" value="fisica">
+                            <div class="card card-step-2-fisica border-0 d-none" style="background-color: #fafafa;">
+                                <div class="card-body">
+                                    <div class="card-title d-flex justify-content-between">
+                                        <h5 class="tituloPaso2">Creá tu Cuenta</h5>
+                                        <span>Paso 2 de 2</span>
+                                    </div>
+                                    <div class="row mb-5 subTituloRegistro" style="margin-bottom:5rem">
+                                        <span>Para finalizar, completá tu dirección.</span>
+                                    </div>
+                                    <!--  row provincia -->
+                                    <div class="row mb-2 pt-4">
+                                        <div class="col">
+                                            <div class="form-group form-floating">
+                                                <select class="form-select" name="provincia" id="provincia" tabindex="15" data-checkfield="true">
+                                                    <option value="" selected="selected">Seleccione</option>
+                                                                                                                                                            <option value="B">BUENOS AIRES</option>
+                                                                                                        <option value="C">CAPITAL FEDERAL</option>
+                                                                                                        <option value="K">CATAMARCA</option>
+                                                                                                        <option value="H">CHACO</option>
+                                                                                                        <option value="U">CHUBUT</option>
+                                                                                                        <option value="X">CORDOBA</option>
+                                                                                                        <option value="W">CORRIENTES</option>
+                                                                                                        <option value="E">ENTRE RIOS</option>
+                                                                                                        <option value="P">FORMOSA</option>
+                                                                                                        <option value="Y">JUJUY</option>
+                                                                                                        <option value="L">LA PAMPA</option>
+                                                                                                        <option value="F">LA RIOJA</option>
+                                                                                                        <option value="M">MENDOZA</option>
+                                                                                                        <option value="N">MISIONES</option>
+                                                                                                        <option value="Q">NEUQUEN</option>
+                                                                                                        <option value="R">RIO NEGRO</option>
+                                                                                                        <option value="A">SALTA</option>
+                                                                                                        <option value="J">SAN JUAN</option>
+                                                                                                        <option value="D">SAN LUIS</option>
+                                                                                                        <option value="Z">SANTA CRUZ</option>
+                                                                                                        <option value="S">SANTA FE</option>
+                                                                                                        <option value="G">SANTIAGO DEL ESTERO</option>
+                                                                                                        <option value="V">TIERRA DEL FUEGO</option>
+                                                                                                        <option value="T">TUCUMAN</option>
+                                                                                                                                                        </select>
+                                                <label for="provincia" class="label-register">Provincia</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row localidad  -->
+                                    <div class="row mb-2 ">
+                                        <div class="col">
+                                            <div class="form-group form-floating">
+                                                <select class="form-select" name="localidad" id="localidad" tabindex="16" data-checkfield="true">
+                                                    <option value="" selected="selected">Seleccione</option>
+                                                </select>
+                                                <label for="localidad" class="label-register">Localidad</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row direccion  -->
+                                    <div class="row mb-2 ">
+                                        <div class="col">
+                                            <div class="form-group form-floating">
+                                                <input id="direccion" type="text" class="form-control" name="direccion" value="" maxlength="50" tabindex="17" placeholder="Dirección" data-checkfield="true">
+                                                <label for="direccion" class="label-register">Dirección</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row cp  -->
+                                    <div class="row mb-2 ">
+                                        <div class="col">
+                                            <div class="form-group form-floating">
+                                                <input id="cp" type="text" class="form-control" name="cp" value="" maxlength="4" required="" tabindex="18" placeholder="Código postal" data-validation="onlyNumbers" data-checkfield="true">
+                                                <label for="cp" class="label-register">Código postal</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row errors front  -->
+                                    <!-- <div id="form-step-2-fisica-errors" class="d-none">
+                                        <small class="text-danger fw-semibold">* Campo obligatorio</small>
+                                    </div> -->
+                                    <div id="form-step-2-fisica-errors" class="d-none alert alert-danger">
+                                    <!-- <small class="text-danger fw-semibold">* Campo obligatorio</small> -->
+                                        <small class="" style="color:#58151c">* Campo obligatorio</small>
+                                    </div>
+                                    <!--  row errors back  -->
+                                    <div id="form-step-2-fisica-errors-back" class="alert alert-danger d-none">
+                                        <p style="white-space: pre-line;"></p>
+                                    </div>
+                                    <!--  row btn  -->
+                                    <div class="row justify-content-between" style="margin-top: 7rem; margin-bottom: 1.5rem;">
+                                        <div class="col-md-6 col-12 mb-4 text-center text-md-start">
+                                            <div class="form-group">
+                                                <button id="btn-prev-step-fisica" type="button" class="btn btn-prev-step btn-correo-tertiary" tabindex="19" style="border-bottom: 3px solid #FFCE00;">
+                                                    Atrás
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-4 text-center text-md-end">
+                                            <div class="form-group">
+                                                <button id="btn-register-fisica" type="button" class="btn btn-correo-primary px-4 btn-register" tabindex="20">
+                                                    Registrarme
+                                                    <span class="loading-spinner spinner-border spinner-border-sm" role="status" aria-hidden="true" hidden="hidden"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row mb-5"> -->
+                                    <div class="row">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  end register step-2-fisica  -->
+                            <!--  register step-2-juridica  -->
+                            <div class="card card-step-2-juridica border-0    d-none" style="background-color: #fafafa;">
+                                <input type="hidden" id="catFiscalAfip" name="catFiscalAfip" value="">
+                                <input type="hidden" id="codProvinciaAfip" name="codProvinciaAfip" value="">
+                                <div class="card-body" style="padding-bottom:0px;">
+                                    <div class="card-title d-flex justify-content-between">
+                                        <h5 class="tituloCrearCuenta">Creá tu Cuenta</h5>
+                                        <span>Paso 2 de 2</span>
+                                    </div>
+                                    <div class="row mb-0">
+                                        <span>Para finalizar, confirmá tus datos de AFIP.</span>
+                                    </div>
+                                    <!--  row nameAfip -->
+                                    <div class="row mb-0 pt-4">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="nameAfip" class="fw-bold label-register infoAfip">Nombre y apellido / Razón social</label>
+                                                <input id="nameAfip" type="text" class="form-control border-0 bg-transparent px-0 infoAfip" name="nameAfip" value="" readonly="" data-checkfield="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row cuitAfip -->
+                                    <div class="row mb-0 pt-2">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="cuitAfip" class="fw-bold label-register infoAfip">CUIT</label>
+                                                <input id="cuitAfip" type="text" class="form-control border-0 bg-transparent px-0 infoAfip" name="cuitAfip" value="" readonly="" data-checkfield="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row localidad / cp  -->
+                                    <div class="row mb-0 pt-2">
+                                        <div class="col-md-6 col-12 ">
+                                            <div class="form-group">
+                                                <label for="localidadAfip" class="fw-bold label-register infoAfip">Localidad</label>
+                                                <select class="form-select infoAfip" name="localidadAfip" id="localidadAfip" data-checkfield="true">
+                                                    <option value="" selected="selected">Seleccione</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group">
+                                                <label for="cpAfip" class="fw-bold label-register infoAfip">Código postal </label>
+                                                <input id="cpAfip" type="text" class="form-control border-0 bg-transparent px-0 infoAfip" name="cpAfip" value="" readonly="" data-checkfield="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row provincia Afip  -->
+                                    <div class="row mb-0  d-none pt-2">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="provinciaAfip label-register infoAfip">Provincia</label>
+                                                <input id="provinciaAfip" type="text" class="form-control infoAfip" name="provinciaAfip" value="" data-checkfield="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  row domicilio  -->
+                                    <div class="row mb-0 pt-2">
+                                        <div class="form-group">
+                                            <label for="domicilioAfip" class="fw-bold label-register infoAfip">Domicilio</label>
+                                            <input id="domicilioAfip" type="text" class="form-control border-0 bg-transparent px-0 infoAfip" name="domicilioAfip" value="" readonly="" data-checkfield="true">
+                                        </div>
+                                    </div>
+                                    <!--  row cond impo  -->
+                                    <div class="row mb-0 pt-2">
+                                        <div class="form-group">
+                                            <label for="condicionAfip" class="fw-bold label-register infoAfip">Condición impositiva</label>
+                                            <input id="condicionAfip" type="text" class="form-control border-0 bg-transparent px-0 infoAfip" name="condicionAfip" value="" readonly="" data-checkfield="true">
+                                        </div>
+                                    </div>
+                                    <!--  row text  -->
+                                    <div class="row pt-2 pb-4 ">
+                                        <div class="col-12" style="font-size: 12px;">
+                                            <small> * Si alguno de los datos no es correcto, deberás realizar la gestión correspondiente en AFIP</small>
+                                        </div>
+                                    </div>
+                                    <!--  row errors front  -->
+                                    <div id="form-step-2-juridica-errors" class="d-none">
+                                        <small class="text-danger fw-semibold">* Campo obligatorio</small>
+                                    </div>
+                                    <!--  row errors back  -->
+                                    <div id="form-step-2-juridica-errors-back" class="alert alert-danger d-none">
+                                        <p style="white-space: pre-line;"></p>
+                                    </div>
+                                    <!--  row btn  -->
+                                    <div class="row justify-content-between" style=" margin-bottom: 0rem;">
+                                        <div class="col-md-6 col-12 mb-4 text-center text-md-start">
+                                            <div class="form-group">
+                                                <button id="btn-prev-step-juridica" type="button" class="btn btn-prev-step btn-correo-tertiary" tabindex="10" style="border-bottom: 3px solid #FFCE00;">
+                                                    Atrás
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-4 text-center text-md-end">
+                                            <div class="form-group">
+                                                <button id="btn-register-juridica" type="button" class="btn btn-correo-primary btn-register px-4" tabindex="10">
+                                                    Registrarme
+                                                    <span class="loading-spinner spinner-border spinner-border-sm" role="status" aria-hidden="true" hidden="hidden"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  end register step-2-juridica  -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/jquery.min.js"></script>
+<script src="../assets/bootstrap.bundle.js"></script>
+<script src="../assets/jquery.mask.js"></script>
+<script>
+  // Toggle de contraseña (reemplaza ShowPassword del sitio original)
+  function ShowPassword(id){ var el=document.getElementById(id); if(el){ el.type = el.type==='password'?'text':'password'; } }
+  // Máscaras numéricas básicas de los campos (código de área / celular / documento)
+  (function(){
+    if(window.jQuery && $.fn.mask){
+      $('#codigo_area_celular').mask('0000');
+      $('#celular').mask('00000000');
+      $('#doc_number').mask('00000000000');
+    }
+  })();
+</script>
+</body>
+</html>
