@@ -20,6 +20,9 @@ Sitio estático (multi-página) que agrupa distintas **tareas de UX / auditoría
 /mic-1061-telefono-celular/       Sección: MIC-1061 validaciones de teléfono celular
     index.html                    Landing (lista de sub-pantallas)
     README.md                     Documentación de la sección
+    components/                   FormSelect, FormPassword, FormButton, FormFields
+    assets/                       Vendor/estilos MiCorreo (bootstrap, estilos-inputs…)
+    mic-003-registro/             Pantalla Registro 1.1
 ```
 
 ## Convención de estilos

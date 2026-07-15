@@ -1,0 +1,40 @@
+/* FormButton — tamaños / estados compartidos (MIC-1061)
+ *
+ * Variantes visuales (colores) viven en assets/estilos.css:
+ *   .btn-correo-primary | .btn-correo-secondary | .btn-correo-tertiary
+ *
+ * Acá solo namespaceamos tamaños. sm/lg se afinarán con HTML de referencia.
+ */
+
+.mic-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.mic-btn .loading-spinner {
+  vertical-align: -0.1em;
+}
+
+/* md = tamaño actual de producción (44px aprox. vía padding de .btn-correo-*) */
+.mic-btn--md {
+  /* placeholder: hereda padding de .btn-correo-primary */
+}
+
+/* TODO: calibrar con HTML de referencia */
+.mic-btn--sm {
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+  padding-left: 0.9rem;
+  padding-right: 0.9rem;
+  font-size: 0.875rem;
+}
+
+.mic-btn--lg {
+  padding-top: 0.7rem !important;
+  padding-bottom: 0.7rem !important;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  font-size: 1.05rem;
+}

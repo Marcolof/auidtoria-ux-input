@@ -1,0 +1,47 @@
+/* UX TEST · FormFields — estilos compartidos de campos MiCorreo */
+
+.field-invalid .form-control,
+.field-invalid .form-select {
+  border-color: #dc3545 !important;
+}
+.field-invalid .label-register {
+  color: #dc3545 !important;
+}
+
+.ff-errors-banner,
+#form-step-1-errors-back {
+  border: 0;
+  background: #f8d7da;
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+.ff-errors-banner p,
+#form-step-1-errors-back p {
+  margin: 0;
+  color: #842029;
+  white-space: pre-line;
+  line-height: 1.5;
+}
+
+.btn-addon-password,
+.btn-addon-password:hover,
+.btn-addon-password:active {
+  border-left: 0;
+  border-right: var(--bs-border-width) solid var(--bs-border-color);
+  border-top: var(--bs-border-width) solid var(--bs-border-color);
+  border-bottom: var(--bs-border-width) solid var(--bs-border-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  color: #49454f;
+  padding: 0 10px;
+}
+.btn-addon-password:hover {
+  color: var(--bs-body-color);
+  background-color: var(--bs-white);
+}
+.btn-addon-password svg {
+  display: block;
+  pointer-events: none;
+}

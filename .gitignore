@@ -3,3 +3,6 @@ Font/*.otf
 
 # HTML de referencia descargado (queda solo en local, no se publica)
 mic-1061-telefono-celular/html de referencia/
+
+# Documentación funcional interna (Jira/relevamiento) — queda solo en local, repo público
+mic-1061-telefono-celular/*.docx

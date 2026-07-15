@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="../assets/bootstrap.css"/>
 <link rel="stylesheet" href="../assets/estilos.css"/>
 <link rel="stylesheet" href="../assets/bootstrap-icons.css"/>
+<link rel="stylesheet" href="../assets/estilos-inputs.css"/>
+<link rel="stylesheet" href="../components/form-fields.css"/>
+<link rel="stylesheet" href="../components/button.css"/>
 <style>
   body{margin:0;background:#efe9e4;min-height:100vh}
   #app-backdrop{position:fixed;inset:0;background:rgba(20,16,14,.5);z-index:1040}
@@ -37,187 +40,8 @@
                                         <h5 class="tituloCrearCuenta">Creá tu Cuenta</h5>
                                         <span class="pasos">Paso 1 de 2</span>
                                     </div>
-                                    <div class="row">
-                                    </div>
-                                    <!--  row nombre / apellido -->
-                                    <div class="row  ">
-                                        <div class="col-md-6 col-12 mb-2">
-                                            <div class="form-group form-floating">
-                                                <input id="name" type="text" class="form-control" name="name" value="" maxlength="30" required="" tabindex="1" placeholder="Nombre" data-validation="onlyLetters" data-checkfield="true">
-                                                <label for="name" class="label-register">Nombre</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12 mb-2">
-                                            <div class="form-group form-floating">
-                                                <input id="lastname" type="text" class="form-control" name="lastname" value="" maxlength="30" required="" tabindex="2" placeholder="Apellido" data-validation="onlyLetters" data-checkfield="true">
-                                                <label for="lastname" class="label-register">Apellido</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--  row tipo / nro documento -->
-                                    <div class="row ">
-                                        <div class="col-md-4 col-12 mb-2">
-                                            <div class="form-group form-floating">
-                                                <select class="form-select" name="doc_type" id="doc_type" data-checkfield="true">
-                                                    <option value="" selected="selected">Seleccione</option>
-                                                                                                                                                            <option value="1">DNI</option>
-                                                                                                                                                        </select>
-                                                <label for="doc_type" class="label-register">Tipo</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8 col-12 mb-2">
-                                            <div class="form-group form-floating">
-                                                <input id="doc_number" type="text" class="form-control" name="doc_number" value="" maxlength="10" required="" tabindex="4" placeholder="Documento de identidad" data-validation="onlyNumbers" data-checkfield="true">
-                                                <label for="doc_number" class="label-register">Documento de identidad</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--  row CUIT / Rubro  -->
-                                    <div class="row ">
-                                        <div class="col-md-6 col-12 mb-2">
-                                            <div class="form-group form-floating">
-                                                <input id="cuit_number" type="text" class="form-control" name="cuit_number" value="" maxlength="11" tabindex="5" placeholder="CUIT" data-validation="onlyNumbers" data-checkfield="false">
-                                                <!-- <small class="text-muted">CUIT requerido sólo para empresas.</small> -->
-                                                <label for="cuit_number" style="z-index: 0;" class="label-register">CUIT <small style="font-size: 12px;">(requerido sólo para empresas)</small></label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12 mb-2">
-                                            <div class="form-group form-floating">
-                                                <select class="form-select" id="rubro" name="rubro" tabindex="6" data-checkfield="true" onchange="updateRubroDesc()">
-                                                    <option value="" selected="selected">Seleccione</option>
-                                                                                                                                                            <option value="1" data-desc="Alimentos y Bebidas">
-                                                        Alimentos y Bebidas
-                                                    </option>
-                                                                                                        <option value="2" data-desc="Arte y Música">
-                                                        Arte y Música
-                                                    </option>
-                                                                                                        <option value="3" data-desc="Bazar y Cocina">
-                                                        Bazar y Cocina
-                                                    </option>
-                                                                                                        <option value="4" data-desc="Bebes">
-                                                        Bebes
-                                                    </option>
-                                                                                                        <option value="5" data-desc="Belleza y Perfumería">
-                                                        Belleza y Perfumería
-                                                    </option>
-                                                                                                        <option value="6" data-desc="Botánica">
-                                                        Botánica
-                                                    </option>
-                                                                                                        <option value="7" data-desc="Centros Comerciales y Supermercados">
-                                                        Centros Comerciales y Supermercados
-                                                    </option>
-                                                                                                        <option value="8" data-desc="Deco y Hogar">
-                                                        Deco y Hogar
-                                                    </option>
-                                                                                                        <option value="9" data-desc="Deportes">
-                                                        Deportes
-                                                    </option>
-                                                                                                        <option value="10" data-desc="Electrodomésticos">
-                                                        Electrodomésticos
-                                                    </option>
-                                                                                                        <option value="11" data-desc="Ferretería y Construcción">
-                                                        Ferretería y Construcción
-                                                    </option>
-                                                                                                        <option value="12" data-desc="Indumentaria, Calzado y Accesorios">
-                                                        Indumentaria, Calzado y Accesorios
-                                                    </option>
-                                                                                                        <option value="13" data-desc="Industrias y Oficinas">
-                                                        Industrias y Oficinas
-                                                    </option>
-                                                                                                        <option value="14" data-desc="Juguetería y Librería">
-                                                        Juguetería y Librería
-                                                    </option>
-                                                                                                        <option value="15" data-desc="Limpieza">
-                                                        Limpieza
-                                                    </option>
-                                                                                                        <option value="16" data-desc="Mascotas">
-                                                        Mascotas
-                                                    </option>
-                                                                                                        <option value="17" data-desc="Salud">
-                                                        Salud
-                                                    </option>
-                                                                                                        <option value="18" data-desc="SexShop">
-                                                        SexShop
-                                                    </option>
-                                                                                                        <option value="19" data-desc="Tabaquería">
-                                                        Tabaquería
-                                                    </option>
-                                                                                                        <option value="20" data-desc="Tecnología E Informática">
-                                                        Tecnología E Informática
-                                                    </option>
-                                                                                                        <option value="21" data-desc="Textil">
-                                                        Textil
-                                                    </option>
-                                                                                                        <option value="22" data-desc="Vehículos y Accesorios">
-                                                        Vehículos y Accesorios
-                                                    </option>
-                                                                                                        <option value="23" data-desc="Otros (espacio a completar por el usuario)">
-                                                        Otros (espacio a completar por el usuario)
-                                                    </option>
-                                                                                                                                                        </select>
-                                                <label for="rubro" class="label-register">Rubro</label>
-                                                <input type="hidden" id="rubro_desc" name="rubro_desc" value="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--  row custom Rubro  -->
-                                    <div class="row   d-none row-custom_rubro">
-                                        <div class="col mb-2">
-                                            <div class="form-group form-floating">
-                                                <input id="custom_rubro" type="text" class="form-control" name="custom_rubro" value="" maxlength="30" tabindex="7" placeholder="Indicá el rubro de tu empresa" data-validation="onlyLetters" data-checkfield="false">
-                                                <label for="custom_rubro" class="label-register">Indicá el rubro de tu empresa</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- row celular -->
-                                    <div class="row">
-
-                                        <!-- Código de Área -->
-                                        <div class="col-4 mb-2">
-                                            <div class="form-group form-floating">
-                                                <input id="codigo_area_celular" type="text" class="form-control" name="codigo_area_celular" value="" pattern="[1-9][0-9]{1,3}" minlength="2" maxlength="4" required="" tabindex="8" placeholder="Cód. Área" data-validation="onlyNumbers" data-checkfield="true">
-                                                <label for="codigo_area_celular" class="label-register">Cód. Área (sin 0)</label>
-                                            </div>
-                                        </div>
-
-                                        <!-- Celular -->
-                                        <div class="col-8 mb-2">
-                                            <div class="form-group form-floating">
-                                                <input id="celular" type="text" class="form-control" name="celular" value="" pattern="[0-9]{6,8}" minlength="6" maxlength="8" required="" tabindex="9" placeholder="Celular" data-validation="onlyNumbers" data-checkfield="true">
-                                                <label for="celular" class="label-register">Celular (sin 15)</label>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <!--  row email  -->
-                                    <div class="row ">
-                                        <div class="col mb-2">
-                                            <div class="form-group form-floating">
-                                                <input id="email" type="text" class="form-control" name="email" value="" maxlength="190" required="" tabindex="9" placeholder="Correo electrónico" data-validation="onlyEmail" data-checkfield="true">
-                                                <label for="email" class="label-register">Correo electrónico</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--  row password / password confirm  -->
-                                    <div class="row ">
-                                        <div class="col-md-6 col-12 mb-2">
-                                            <div class="form-group form-floating input-group">
-                                            <!-- <input style="z-index: 1;" id="password" type="password" class="form-control border-end-0 form-register passwordRegister " name="password" value="" maxlength="20" required tabindex=10 placeholder="Contrase&ntilde;a" data-checkfield="true"> -->
-                                            <input style="z-index: 1;" id="password_register" type="password" class="form-control border-end-0 passwordRegister password-field" name="password" value="" maxlength="20" required="" tabindex="10" placeholder="Contraseña" data-checkfield="true">
-                                                <label for="password" class="label-register">Contraseña</label>
-                                                <button class="btn btn-outline-secondary btn-addon-password bi-eye-fill border-start-0" style="border-top-right-radius: var(--bs-border-radius);border-bottom-right-radius: var(--bs-border-radius);" type="button" id="password_button" onclick="ShowPassword(&#39;password_register&#39;)">
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12 mb-2">
-                                            <div class="form-group form-floating input-group">
-                                                <input style="z-index: 1;" id="password_confirm" type="password" class="form-control border-end-0" name="password_confirm" value="" maxlength="20" required="" tabindex="11" placeholder="Confirmar Contraseña" data-checkfield="true">
-                                                <label for="password_confirm" class="label-register">Confirmar Contraseña</label>
-                                                <button class="btn btn-outline-secondary btn-addon-password bi-eye-fill border-start-0" style="border-top-right-radius: var(--bs-border-radius);border-bottom-right-radius: var(--bs-border-radius);" type="button" id="password_confirm_button" onclick="ShowPassword(&#39;password_confirm&#39;)">
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <!-- Campos del paso 1: montados por FormFields (components/form-fields.js) -->
+                                    <div id="ff-step-1-fields"></div>
                                     <!--  row terms  -->
                                     <div class="row my-3">
                                         <div class="col">
@@ -237,23 +61,16 @@
                                     </div>
                                     <!--  row errors front  -->
                                     <div id="form-step-1-errors" class="d-none alert alert-danger">
-                                    <!-- <small class="text-danger fw-semibold">* Campo obligatorio</small> -->
                                         <small class="" style="color:#58151c">* Campo obligatorio</small>
                                     </div>
                                     <!--  row errors back  -->
                                     <div id="form-step-1-errors-back" class="alert alert-danger d-none">
-                                        <!-- <p style="white-space: pre-line;"></p> -->
                                         <p style="margin:0;"></p>
                                     </div>
                                     <!--  row btn  -->
                                     <div class="row my-3">
                                         <div class="col d-flex justify-content-center">
-                                            <div class="form-group">
-                                                <button id="btn-next-step" type="button" class="btn btn-correo-primary px-4 " tabindex="13">
-                                                    Siguiente
-                                                    <span class="loading-spinner spinner-border spinner-border-sm" role="status" aria-hidden="true" hidden="hidden"></span>
-                                                </button>
-                                            </div>
+                                            <div class="form-group" id="ff-step-1-btn"></div>
                                         </div>
                                     </div>
                                     <!--  row account  -->
@@ -499,17 +316,82 @@
 <script src="../assets/jquery.min.js"></script>
 <script src="../assets/bootstrap.bundle.js"></script>
 <script src="../assets/jquery.mask.js"></script>
+<script src="../components/select.js"></script>
+<script src="../components/password.js"></script>
+<script src="../components/button.js"></script>
+<script src="../components/form-fields.js"></script>
 <script>
-  // Toggle de contraseña (reemplaza ShowPassword del sitio original)
-  function ShowPassword(id){ var el=document.getElementById(id); if(el){ el.type = el.type==='password'?'text':'password'; } }
-  // Máscaras numéricas básicas de los campos (código de área / celular / documento)
-  (function(){
-    if(window.jQuery && $.fn.mask){
-      $('#codigo_area_celular').mask('0000');
-      $('#celular').mask('00000000');
-      $('#doc_number').mask('00000000000');
-    }
-  })();
+function updateRubroDesc() {
+  var sel = document.getElementById('rubro');
+  var hidden = document.getElementById('rubro_desc');
+  var customRow = document.querySelector('.row-custom_rubro');
+  if (!sel || !hidden) return;
+  var opt = sel.options[sel.selectedIndex];
+  hidden.value = opt && opt.getAttribute('data-desc') ? opt.getAttribute('data-desc') : '';
+  if (customRow) {
+    var isOtros = sel.value === '23';
+    customRow.classList.toggle('d-none', !isOtros);
+  }
+}
+
+(function () {
+  var RUBROS = [
+    'Alimentos y Bebidas', 'Arte y Música', 'Bazar y Cocina', 'Bebes', 'Belleza y Perfumería',
+    'Botánica', 'Centros Comerciales y Supermercados', 'Deco y Hogar', 'Deportes',
+    'Electrodomésticos', 'Ferretería y Construcción', 'Indumentaria, Calzado y Accesorios',
+    'Industrias y Oficinas', 'Juguetería y Librería', 'Limpieza', 'Mascotas', 'Salud',
+    'SexShop', 'Tabaquería', 'Tecnología E Informática', 'Textil', 'Vehículos y Accesorios',
+    'Otros (espacio a completar por el usuario)'
+  ].map(function (label, i) {
+    return { value: String(i + 1), label: label, desc: label };
+  });
+
+  FormFields.render('#ff-step-1-fields', [
+    { row: [
+      { type: 'text', col: 'md-6 col-12', id: 'name', label: 'Nombre', maxLength: 30, required: true, tabindex: 1, validation: 'onlyLetters', checkField: true },
+      { type: 'text', col: 'md-6 col-12', id: 'lastname', label: 'Apellido', maxLength: 30, required: true, tabindex: 2, validation: 'onlyLetters', checkField: true }
+    ]},
+    { row: [
+      { type: 'select', col: 'md-4 col-12', id: 'doc_type', name: 'doc_type', label: 'Tipo', checkField: true, options: [{ value: '1', label: 'DNI' }] },
+      { type: 'text', col: 'md-8 col-12', id: 'doc_number', label: 'Documento de identidad', maxLength: 10, required: true, tabindex: 4, validation: 'onlyNumbers', checkField: true }
+    ]},
+    { row: [
+      {
+        type: 'text', col: 'md-6 col-12', id: 'cuit_number',
+        label: 'CUIT <small style="font-size: 12px;">(requerido sólo para empresas)</small>',
+        placeholder: 'CUIT', maxLength: 11, tabindex: 5, validation: 'onlyNumbers', checkField: false, labelStyle: 'z-index: 0;'
+      },
+      {
+        type: 'select', col: 'md-6 col-12', id: 'rubro', label: 'Rubro', tabindex: 6, checkField: true,
+        options: RUBROS, onchange: 'updateRubroDesc()', hiddenId: 'rubro_desc'
+      }
+    ]},
+    { row: [
+      { type: 'text', col: '', id: 'custom_rubro', label: 'Indicá el rubro de tu empresa', maxLength: 30, tabindex: 7, validation: 'onlyLetters', checkField: false }
+    ], className: 'd-none row-custom_rubro' },
+    { type: 'phone', areaTabindex: 8, celTabindex: 9 },
+    { type: 'text', id: 'email', label: 'Correo electrónico', maxLength: 190, required: true, tabindex: 9, validation: 'onlyEmail', checkField: true },
+    { row: [
+      { type: 'password', col: 'md-6 col-12', id: 'password_register', name: 'password', label: 'Contraseña', className: 'passwordRegister', buttonId: 'password_button', tabindex: 10 },
+      { type: 'password', col: 'md-6 col-12', id: 'password_confirm', label: 'Confirmar Contraseña', buttonId: 'password_confirm_button', tabindex: 11 }
+    ]}
+  ]);
+
+  FormButton.render('#ff-step-1-btn', {
+    id: 'btn-next-step',
+    label: 'Siguiente',
+    variant: 'primary',
+    size: 'md',
+    className: 'px-4',
+    tabindex: 13,
+    spinner: true
+  });
+
+  FormFields.bindPhone({
+    trigger: '#btn-next-step',
+    banner: '#form-step-1-errors-back'
+  });
+})();
 </script>
 </body>
 </html>
